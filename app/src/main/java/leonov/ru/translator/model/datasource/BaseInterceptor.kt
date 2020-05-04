@@ -15,7 +15,7 @@ class BaseInterceptor private constructor() : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
-        responseCode = response.code()
+        responseCode = response.code
         return response
     }
 

@@ -1,5 +1,8 @@
 package leonov.ru.translator.view.main
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.observers.DisposableObserver
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.datasource.DataSourceLocal
 import leonov.ru.translator.model.datasource.DataSourceRemote
@@ -7,17 +10,14 @@ import leonov.ru.translator.model.repository.RepositoryImplementation
 import leonov.ru.translator.presenter.Presenter
 import leonov.ru.translator.rx.SchedulerProvider
 import leonov.ru.translator.view.base.View
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableObserver
 
 class MainPresenterImpl<T : DataModel, V : View>(
     private val interactor: MainInteractor = MainInteractor(
         RepositoryImplementation(DataSourceRemote()),
         RepositoryImplementation(DataSourceLocal())
     ),
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
-    protected val schedulerProvider: SchedulerProvider = SchedulerProvider()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable(),
+    private val schedulerProvider: SchedulerProvider = SchedulerProvider()
 ) : Presenter<T, V> {
 
     private var currentView: V? = null
@@ -63,4 +63,5 @@ class MainPresenterImpl<T : DataModel, V : View>(
             }
         }
     }
+
 }

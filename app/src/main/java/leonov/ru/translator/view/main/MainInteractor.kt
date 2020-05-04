@@ -4,7 +4,7 @@ import com.anikin.aleksandr.simplevocabulary.viewmodel.Interactor
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.data.SearchResult
 import leonov.ru.translator.model.repository.Repository
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 class MainInteractor(
     private val remoteRepository: Repository<List<SearchResult>>,

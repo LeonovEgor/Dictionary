@@ -1,6 +1,6 @@
 package com.anikin.aleksandr.simplevocabulary.viewmodel
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface Interactor<T> {
 
