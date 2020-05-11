@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import leonov.ru.translator.R
 import leonov.ru.translator.model.data.SearchResult
-import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
+import kotlinx.android.synthetic.main.recyclerview_item.view.*
+import leonov.ru.translator.view.image.GlideImageLoader
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<SearchResult>) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
@@ -19,12 +20,12 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
         return RecyclerItemViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.activity_main_recyclerview_item, parent, false) as View
+                .inflate(R.layout.recyclerview_item, parent, false) as View
         )
     }
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
@@ -32,11 +33,23 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
     }
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val leftBracket = "("
+        private val rightBracket = ")"
+        private val httpsPrefix = "https:"
 
         fun bind(data: SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemView.header_textview_recycler_item.text = data.text
-                itemView.description_textview_recycler_item.text = data.meanings?.get(0)?.translation?.translation
+                itemView.tv_item_header.text = data.text
+                itemView.tv_item_description.text = data.meanings?.get(0)?.translation?.text
+
+                data.meanings?.get(0)?.transcription?.let {
+                    val transcription = leftBracket + it + rightBracket
+                    itemView.tv_item_transcription.text = transcription
+                }
+
+                data.meanings?.get(0)?.previewUrl?.let {url->
+                    GlideImageLoader().loadInto("$httpsPrefix$url", itemView.iv_picture)
+                }
 
                 itemView.setOnClickListener { openInNewWindow(data) }
             }

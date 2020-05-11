@@ -6,7 +6,7 @@ import leonov.ru.translator.model.data.SearchResult
 import leonov.ru.translator.model.repository.Repository
 import io.reactivex.rxjava3.core.Observable
 
-class MainInteractor(
+open class MainInteractor(
     private val remoteRepository: Repository<List<SearchResult>>,
     private val localRepository: Repository<List<SearchResult>>
 ) : Interactor<DataModel> {

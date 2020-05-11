@@ -43,4 +43,10 @@
     <style name="AppModalStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_dialog_background</item>
     </style>
+
+    <style name="Margin" parent="AppTheme">
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+
 </resources>

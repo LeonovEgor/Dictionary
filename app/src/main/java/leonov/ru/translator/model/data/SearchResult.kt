@@ -1,8 +1,8 @@
 package leonov.ru.translator.model.data
 
-import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
 
 class SearchResult(
-    @field:SerializedName("text") val text: String?,
-    @field:SerializedName("meanings") val meanings: List<Meanings>?
+    @Expose val text: String?,
+    @Expose val meanings: List<Meanings>?
 )

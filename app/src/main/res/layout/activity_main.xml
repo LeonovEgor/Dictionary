@@ -3,7 +3,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@color/colorBackground">
 
     <FrameLayout
             android:id="@+id/success_linear_layout"
@@ -23,7 +24,9 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginEnd="@dimen/margin_medium"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                />
     </FrameLayout>
 
     <FrameLayout

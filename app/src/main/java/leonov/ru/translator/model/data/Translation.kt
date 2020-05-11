@@ -1,5 +1,7 @@
 package leonov.ru.translator.model.data
 
-import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
 
-class Translation(@field:SerializedName("text") val translation: String?)
+class Translation(
+    @Expose val text: String?
+)

@@ -13,6 +13,7 @@ import leonov.ru.translator.view.base.BaseActivity
 import leonov.ru.translator.view.base.View
 import leonov.ru.translator.view.main.adapter.MainAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import leonov.ru.translator.view.sound.SoundHelper
 
 class MainActivity : BaseActivity<DataModel>() {
 
@@ -21,12 +22,15 @@ class MainActivity : BaseActivity<DataModel>() {
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: SearchResult) {
                 Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                data.meanings?.get(0)?.soundUrl?.let {
+                    SoundHelper(applicationContext).playUrl(it)
+                }
+
             }
         }
 
-    override fun createPresenter(): Presenter<DataModel, View> {
-        return MainPresenterImpl()
-    }
+    override fun createPresenter(): Presenter<DataModel, View> = MainPresenterImpl()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

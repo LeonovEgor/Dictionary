@@ -1,5 +1,7 @@
 package leonov.ru.translator.model.datasource
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import leonov.ru.translator.model.data.SearchResult
 import io.reactivex.rxjava3.core.Observable
@@ -11,22 +13,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitImplementation : DataSource<List<SearchResult>> {
 
-    override fun getData(word: String): Observable<List<SearchResult>> {
-        return getService(BaseInterceptor.interceptor).search(word)
-    }
+    override fun getData(word: String) =
+        getService(BaseInterceptor.interceptor).search(word)
 
-    private fun getService(interceptor: Interceptor): ApiService {
-        return createRetrofit(interceptor).create(ApiService::class.java)
-    }
+    private fun getService(interceptor: Interceptor) =
+        createRetrofit(interceptor).create(ApiService::class.java)
 
-    private fun createRetrofit(interceptor: Interceptor): Retrofit {
-        return Retrofit.Builder()
+
+    private fun getGsonBuilder() = GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+        .excludeFieldsWithoutExposeAnnotation()
+        .create()
+
+    private fun createRetrofit(interceptor: Interceptor) = Retrofit.Builder()
             .baseUrl(BASE_URL_LOCATIONS)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(getGsonBuilder()))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(createOkHttpClient(interceptor))
             .build()
-    }
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {
         val httpClient = OkHttpClient.Builder()

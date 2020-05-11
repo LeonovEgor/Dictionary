@@ -8,6 +8,7 @@ import leonov.ru.translator.model.datasource.DataSourceLocal
 import leonov.ru.translator.model.datasource.DataSourceRemote
 import leonov.ru.translator.model.repository.RepositoryImplementation
 import leonov.ru.translator.presenter.Presenter
+import leonov.ru.translator.rx.ISchedulerProvider
 import leonov.ru.translator.rx.SchedulerProvider
 import leonov.ru.translator.view.base.View
 
@@ -17,7 +18,7 @@ class MainPresenterImpl<T : DataModel, V : View>(
         RepositoryImplementation(DataSourceLocal())
     ),
     private val compositeDisposable: CompositeDisposable = CompositeDisposable(),
-    private val schedulerProvider: SchedulerProvider = SchedulerProvider()
+    private val schedulerProvider: ISchedulerProvider = SchedulerProvider()
 ) : Presenter<T, V> {
 
     private var currentView: V? = null
