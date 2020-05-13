@@ -6,16 +6,22 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
+    <style name="Margin" parent="AppTheme">
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
     <style name="BaseTextStyle" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/color_text_main</item>
         <item name="android:textSize">@dimen/text_size_standard</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:layout_margin">8dp</item>
     </style>
 
     <style name="HeaderTextStyle" parent="BaseTextStyle">
         <item name="android:textColor">@color/color_text_header</item>
         <item name="android:textSize">@dimen/text_size_standard_header</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">8dp</item>
     </style>
 
     <style name="TextViewButtonStyle" parent="BaseTextStyle">
@@ -43,10 +49,5 @@
     <style name="AppModalStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_dialog_background</item>
     </style>
-
-    <style name="Margin" parent="AppTheme">
-        <item name="android:layout_margin">4dp</item>
-    </style>
-
 
 </resources>

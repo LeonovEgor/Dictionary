@@ -1,7 +1,8 @@
-package leonov.ru.translator.model.datasource
+package leonov.ru.translator.model.data.api
 
-import leonov.ru.translator.model.data.SearchResult
+
 import io.reactivex.rxjava3.core.Observable
+import leonov.ru.translator.model.data.SearchResult
 import retrofit2.http.GET
 import retrofit2.http.Query
 

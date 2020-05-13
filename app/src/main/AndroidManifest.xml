@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="leonov.ru.translator">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="leonov.ru.translator">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -11,9 +12,12 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:name=".application.TranslatorApp"
+            tools:ignore="AllowBackup">
         <activity android:name="leonov.ru.translator.view.main.MainActivity"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="portrait"
+                tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

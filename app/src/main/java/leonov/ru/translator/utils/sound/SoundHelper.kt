@@ -1,4 +1,4 @@
-package leonov.ru.translator.view.sound
+package leonov.ru.translator.utils.sound
 
 import android.content.Context
 import android.media.MediaPlayer

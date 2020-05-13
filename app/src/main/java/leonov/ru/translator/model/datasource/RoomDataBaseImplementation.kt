@@ -1,7 +1,7 @@
 package leonov.ru.translator.model.datasource
 
-import leonov.ru.translator.model.data.SearchResult
 import io.reactivex.rxjava3.core.Observable
+import leonov.ru.translator.model.data.SearchResult
 
 class RoomDataBaseImplementation : DataSource<List<SearchResult>> {
 

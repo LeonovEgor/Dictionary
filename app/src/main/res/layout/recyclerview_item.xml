@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp"
         style="@style/Margin"
@@ -12,7 +12,6 @@
         >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Margin">
@@ -23,6 +22,7 @@
                 android:layout_height="72dp"
                 android:contentDescription="@string/image"
                 android:scaleType="centerCrop"
+                style="@style/Margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,6 @@
                 style="@style/HeaderTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
                 app:layout_constraintStart_toEndOf="@id/iv_picture"
                 app:layout_constraintTop_toTopOf="@id/iv_picture"
                 tools:text="Header" />
@@ -41,18 +40,18 @@
                 style="@style/BaseTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
                 app:layout_constraintStart_toEndOf="@id/tv_item_header"
                 app:layout_constraintBottom_toBottomOf="@id/tv_item_header"
+                app:layout_constraintTop_toTopOf="@id/tv_item_header"
                 tools:text="@string/transcription" />
 
         <TextView
                 android:id="@+id/tv_item_description"
                 style="@style/BaseTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
                 app:layout_constraintStart_toEndOf="@id/iv_picture"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_item_header"
                 tools:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 

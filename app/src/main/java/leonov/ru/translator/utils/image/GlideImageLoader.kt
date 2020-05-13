@@ -1,4 +1,4 @@
-package leonov.ru.translator.view.image
+package leonov.ru.translator.utils.image
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

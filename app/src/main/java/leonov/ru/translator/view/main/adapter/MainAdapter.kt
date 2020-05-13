@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import leonov.ru.translator.R
 import leonov.ru.translator.model.data.SearchResult
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
-import leonov.ru.translator.view.image.GlideImageLoader
+import leonov.ru.translator.utils.convertMeaningsToString
+import leonov.ru.translator.utils.image.GlideImageLoader
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<SearchResult>) :
+class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
+
+    private var data: List<SearchResult> = arrayListOf()
 
     fun setData(data: List<SearchResult>) {
         this.data = data
@@ -40,7 +43,10 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
         fun bind(data: SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.tv_item_header.text = data.text
-                itemView.tv_item_description.text = data.meanings?.get(0)?.translation?.text
+
+                data.meanings?.let {
+                    itemView.tv_item_description.text = convertMeaningsToString(it)
+                }
 
                 data.meanings?.get(0)?.transcription?.let {
                     val transcription = leftBracket + it + rightBracket

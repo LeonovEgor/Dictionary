@@ -4,7 +4,8 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import leonov.ru.translator.model.data.SearchResult
-import io.reactivex.rxjava3.core.Observable
+import leonov.ru.translator.model.data.api.ApiService
+import leonov.ru.translator.model.data.api.BaseInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,17 +21,17 @@ class RetrofitImplementation : DataSource<List<SearchResult>> {
         createRetrofit(interceptor).create(ApiService::class.java)
 
 
-    private fun getGsonBuilder() = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-        .excludeFieldsWithoutExposeAnnotation()
-        .create()
-
     private fun createRetrofit(interceptor: Interceptor) = Retrofit.Builder()
             .baseUrl(BASE_URL_LOCATIONS)
             .addConverterFactory(GsonConverterFactory.create(getGsonBuilder()))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(createOkHttpClient(interceptor))
             .build()
+
+    private fun getGsonBuilder() = GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+        .excludeFieldsWithoutExposeAnnotation()
+        .create()
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
