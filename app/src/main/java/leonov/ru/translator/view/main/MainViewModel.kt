@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import leonov.ru.translator.model.data.DataModel
-import leonov.ru.translator.utils.parseSearchResults
 import leonov.ru.translator.viewmodel.BaseViewModel
 import javax.inject.Inject
 
@@ -34,8 +33,7 @@ class MainViewModel @Inject constructor(private val interactor: MainInteractor) 
         return object : DisposableObserver<DataModel>() {
 
             override fun onNext(data: DataModel) {
-                dataModel = parseSearchResults(data)
-                liveDataForViewToObserve.value = dataModel
+                liveDataForViewToObserve.value = data
             }
 
             override fun onError(e: Throwable) {

@@ -6,7 +6,7 @@ class Meanings(
     @Expose val translation: Translation?,
     @Expose val partOfSpeechCode: String?,
     @Expose val previewUrl: String?,
-    @Expose val transcription: String,
-    @Expose val soundUrl: String,
+    @Expose val transcription: String?,
+    @Expose val soundUrl: String?,
     @Expose val imageUrl: String?
 )

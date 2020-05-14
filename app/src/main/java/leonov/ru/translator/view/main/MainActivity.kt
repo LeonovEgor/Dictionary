@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import leonov.ru.translator.R
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.data.SearchResult
+import leonov.ru.translator.model.entity.TranslateResult
 import leonov.ru.translator.utils.network.isOnline
 import leonov.ru.translator.utils.sound.SoundHelper
 import leonov.ru.translator.view.base.BaseActivity
@@ -27,13 +28,13 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
-            override fun onItemClick(data: SearchResult) {
+            override fun onItemClick(data: TranslateResult) {
                 Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
-                data.meanings?.get(0)?.soundUrl?.let {
-                    SoundHelper(applicationContext).playUrl(it)
-                }
+                if (data.soundUrl.isNotEmpty())
+                    SoundHelper(applicationContext).playUrl(data.soundUrl)
             }
         }
+
 
     private val adapter: MainAdapter by lazy { MainAdapter(onListItemClickListener) }
 
@@ -84,9 +85,15 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     override fun renderData(dataModel: DataModel) {
         when (dataModel) {
-            is DataModel.Success -> { showSuccessResult(dataModel) }
-            is DataModel.Loading -> { showLoadingProcess(dataModel) }
-            is DataModel.Error -> { showErrorResult(dataModel) }
+            is DataModel.Success -> {
+                showSuccessResult(dataModel)
+            }
+            is DataModel.Loading -> {
+                showLoadingProcess(dataModel)
+            }
+            is DataModel.Error -> {
+                showErrorResult(dataModel)
+            }
         }
     }
 
@@ -129,6 +136,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     companion object {
-        private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG = "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
+        private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
+            "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
     }
 }

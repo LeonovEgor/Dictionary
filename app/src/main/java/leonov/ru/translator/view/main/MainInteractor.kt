@@ -7,6 +7,7 @@ import leonov.ru.translator.model.data.SearchResult
 import leonov.ru.translator.model.repository.Repository
 import leonov.ru.translator.di.NAME_LOCAL
 import leonov.ru.translator.di.NAME_REMOTE
+import leonov.ru.translator.model.entity.TranslateResult
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -20,6 +21,30 @@ class MainInteractor @Inject constructor(
             remoteRepository
         } else {
             localRepository
-        }.getData(word).map { DataModel.Success(it) }
+        }.getData(word).map {searchResultList ->
+
+            val translateResultList = ArrayList<TranslateResult>()
+            searchResultList.forEach {searchResult->
+                mapToTranslateResult(searchResult, translateResultList)
+            }
+            DataModel.Success(translateResultList)
+        }
+    }
+
+    private fun mapToTranslateResult(searchResult: SearchResult, translateResultList: MutableCollection<TranslateResult>) {
+        searchResult.meanings?.let { meaningList->
+            meaningList.forEach {meaning->
+                translateResultList.add(
+                    TranslateResult(
+                    searchResult.text ?: "",
+                    meaning.translation?.text ?: "",
+                        meaning.partOfSpeechCode ?: "",
+                        meaning.previewUrl ?: "",
+                        meaning.transcription ?: "",
+                        meaning.soundUrl ?: ""
+                    )
+                )
+            }
+        }
     }
 }

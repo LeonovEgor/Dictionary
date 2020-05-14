@@ -4,18 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import leonov.ru.translator.R
-import leonov.ru.translator.model.data.SearchResult
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
-import leonov.ru.translator.utils.convertMeaningsToString
+import leonov.ru.translator.R
+import leonov.ru.translator.model.entity.TranslateResult
 import leonov.ru.translator.utils.image.GlideImageLoader
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    private var data: List<SearchResult> = arrayListOf()
+    private var data: List<TranslateResult> = arrayListOf()
 
-    fun setData(data: List<SearchResult>) {
+    fun setData(data: List<TranslateResult>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -40,33 +39,37 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
         private val rightBracket = ")"
         private val httpsPrefix = "https:"
 
-        fun bind(data: SearchResult) {
+        fun bind(data: TranslateResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.tv_item_header.text = data.text
 
-                data.meanings?.let {
-                    itemView.tv_item_description.text = convertMeaningsToString(it)
-                }
+//                data.meanings?.let {
+//                    itemView.tv_item_description.text = convertMeaningsToString(it)
+//                }
+//
+//                data.meanings?.get(0)?.transcription?.let {
+//                    val transcription = leftBracket + it + rightBracket
+//                    itemView.tv_item_transcription.text = transcription
+//                }
+//
+//                data.meanings?.get(0)?.previewUrl?.let {url->
+//                    GlideImageLoader().loadInto("$httpsPrefix$url", itemView.iv_picture)
+//                }
 
-                data.meanings?.get(0)?.transcription?.let {
-                    val transcription = leftBracket + it + rightBracket
-                    itemView.tv_item_transcription.text = transcription
-                }
-
-                data.meanings?.get(0)?.previewUrl?.let {url->
-                    GlideImageLoader().loadInto("$httpsPrefix$url", itemView.iv_picture)
-                }
+                itemView.tv_item_transcription.text = data.transcription
+                itemView.tv_item_description.text = data.translation
+                GlideImageLoader().loadInto("$httpsPrefix${data.previewUrl}", itemView.iv_picture)
 
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
     }
 
-    private fun openInNewWindow(listItemData: SearchResult) {
+    private fun openInNewWindow(listItemData: TranslateResult) {
         onListItemClickListener.onItemClick(listItemData)
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(data: SearchResult)
+        fun onItemClick(data: TranslateResult)
     }
 }
