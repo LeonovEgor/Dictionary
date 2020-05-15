@@ -5,12 +5,9 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.viewmodel.BaseViewModel
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val interactor: MainInteractor) :
+class MainViewModel (private val interactor: MainInteractor) :
     BaseViewModel<DataModel>() {
-
-    private var dataModel: DataModel? = null
 
     fun subscribe(): LiveData<DataModel> {
         return liveDataForViewToObserve

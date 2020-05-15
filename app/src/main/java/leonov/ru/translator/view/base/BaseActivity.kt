@@ -12,7 +12,7 @@ import leonov.ru.translator.viewmodel.Interactor
 
 abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivity() {
 
-    abstract val viewModel: BaseViewModel<T>
+    //abstract val viewModel: BaseViewModel<T>
 
     protected var isNetworkAvailable: Boolean = false
 

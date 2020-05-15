@@ -5,26 +5,20 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import leonov.ru.translator.R
 import leonov.ru.translator.model.data.DataModel
-import leonov.ru.translator.model.data.SearchResult
 import leonov.ru.translator.model.entity.TranslateResult
 import leonov.ru.translator.utils.network.isOnline
 import leonov.ru.translator.utils.sound.SoundHelper
 import leonov.ru.translator.view.base.BaseActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    override lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
@@ -39,8 +33,6 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     private val adapter: MainAdapter by lazy { MainAdapter(onListItemClickListener) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -55,7 +47,8 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private fun initModel() {
-        viewModel = viewModelFactory.create(MainViewModel::class.java)
+        val model: MainViewModel by viewModel()
+        viewModel = model
         viewModel
             .subscribe()
             .observe(this@MainActivity, Observer {
