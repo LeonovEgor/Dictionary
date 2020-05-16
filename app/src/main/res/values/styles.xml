@@ -7,14 +7,14 @@
     </style>
 
     <style name="Margin" parent="AppTheme">
-        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_margin">@dimen/margin</item>
     </style>
 
     <style name="BaseTextStyle" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/color_text_main</item>
         <item name="android:textSize">@dimen/text_size_standard</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_margin">@dimen/margin</item>
     </style>
 
     <style name="HeaderTextStyle" parent="BaseTextStyle">

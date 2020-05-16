@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import leonov.ru.translator.R
 import leonov.ru.translator.model.entity.TranslateResult
-import leonov.ru.translator.utils.image.GlideImageLoader
+import leonov.ru.translator.utils.image.loadByUrl
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
@@ -42,23 +42,10 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
         fun bind(data: TranslateResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.tv_item_header.text = data.text
-
-//                data.meanings?.let {
-//                    itemView.tv_item_description.text = convertMeaningsToString(it)
-//                }
-//
-//                data.meanings?.get(0)?.transcription?.let {
-//                    val transcription = leftBracket + it + rightBracket
-//                    itemView.tv_item_transcription.text = transcription
-//                }
-//
-//                data.meanings?.get(0)?.previewUrl?.let {url->
-//                    GlideImageLoader().loadInto("$httpsPrefix$url", itemView.iv_picture)
-//                }
-
-                itemView.tv_item_transcription.text = data.transcription
+                val transcriptionWithBrackets = "$leftBracket${data.transcription}$rightBracket"
+                itemView.tv_item_transcription.text = transcriptionWithBrackets
                 itemView.tv_item_description.text = data.translation
-                GlideImageLoader().loadInto("$httpsPrefix${data.previewUrl}", itemView.iv_picture)
+                itemView.iv_picture.loadByUrl("$httpsPrefix${data.previewUrl}")
 
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
