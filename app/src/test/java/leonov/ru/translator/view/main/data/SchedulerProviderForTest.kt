@@ -1,4 +1,4 @@
-//package leonov.ru.translator.view.main
+package leonov.ru.translator.view.main.data//package leonov.ru.translator.view.main
 //
 //import io.reactivex.rxjava3.core.Scheduler
 //import io.reactivex.rxjava3.schedulers.Schedulers

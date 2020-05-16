@@ -14,11 +14,11 @@ import leonov.ru.translator.utils.network.isOnline
 import leonov.ru.translator.utils.sound.SoundHelper
 import leonov.ru.translator.view.base.BaseActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
-    lateinit var viewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
@@ -48,8 +48,8 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     private fun initModel() {
         val model: MainViewModel by viewModel()
-        viewModel = model
-        viewModel
+        mainViewModel = model
+        mainViewModel
             .subscribe()
             .observe(this@MainActivity, Observer {
                 renderData(it)
@@ -69,7 +69,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
             override fun onClick(searchWord: String) {
                 isNetworkAvailable = isOnline(applicationContext)
                 if (isNetworkAvailable) {
-                    viewModel.getData(searchWord, isNetworkAvailable)
+                    mainViewModel.getData(searchWord, isNetworkAvailable)
                 } else {
                     showNoInternetConnectionDialog()
                 }

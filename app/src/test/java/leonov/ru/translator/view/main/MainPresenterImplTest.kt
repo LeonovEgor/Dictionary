@@ -1,5 +1,5 @@
-//package leonov.ru.translator.view.main
-//
+package leonov.ru.translator.view.main
+
 //import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 //import io.mockk.mockk
 //import io.reactivex.rxjava3.core.Observable
