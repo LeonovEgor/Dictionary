@@ -1,6 +1,5 @@
 package leonov.ru.translator.view.main
 
-import io.reactivex.rxjava3.core.Observable
 import leonov.ru.translator.viewmodel.Interactor
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.data.SearchResult
@@ -12,19 +11,16 @@ class MainInteractor (
     private val localRepository: Repository<List<SearchResult>>
 ) : Interactor<DataModel> {
 
-    override fun getData(word: String, fromRemoteSource: Boolean): Observable<DataModel> {
-        return if (fromRemoteSource) {
+    override suspend fun getData(word: String, fromRemoteSource: Boolean): DataModel {
+        val translateResultList = ArrayList<TranslateResult>()
+        if (fromRemoteSource) {
             remoteRepository
         } else {
             localRepository
-        }.getData(word).map {searchResultList ->
+        }.getData(word)
+            .map { mapToTranslateResult(it, translateResultList) }
 
-            val translateResultList = ArrayList<TranslateResult>()
-            searchResultList.forEach {searchResult->
-                mapToTranslateResult(searchResult, translateResultList)
-            }
-            DataModel.Success(translateResultList)
-        }
+        return DataModel.Success(translateResultList)
     }
 
     private fun mapToTranslateResult(searchResult: SearchResult, translateResultList: MutableCollection<TranslateResult>) {

@@ -5,6 +5,6 @@ import leonov.ru.translator.model.datasource.DataSource
 
 open class RepositoryImplementation(private val dataSource: DataSource<List<SearchResult>>): Repository<List<SearchResult>> {
 
-    override fun getData(word: String) = dataSource.getData(word)
+    override suspend fun getData(word: String): List<SearchResult> = dataSource.getData(word)
 
 }
