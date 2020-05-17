@@ -1,4 +1,4 @@
-package leonov.ru.translator.view.main.data
+package leonov.ru.translator.view.main
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -12,7 +12,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.repository.RepositoryImplementation
-import leonov.ru.translator.view.main.MainInteractor
+import leonov.ru.translator.view.main.data.searchResultList
 import leonov.ru.translator.viewmodel.Interactor
 import org.junit.After
 import org.junit.Before
