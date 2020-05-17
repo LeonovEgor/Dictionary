@@ -3,7 +3,6 @@ package leonov.ru.translator.model.datasource
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import leonov.ru.translator.model.data.SearchResult
 import leonov.ru.translator.model.data.api.ApiService
 import leonov.ru.translator.model.data.api.BaseInterceptor
