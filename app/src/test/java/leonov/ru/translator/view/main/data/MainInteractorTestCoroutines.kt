@@ -31,12 +31,19 @@ class MainInteractorTestCoroutines {
     @MockK
     private lateinit var mockRemoteRepository: RepositoryImplementation
 
+    private lateinit var interactor: Interactor<DataModel>
+
     private val testDispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
+
+        interactor = MainInteractor(mockRemoteRepository, mockLocalRepository)
+
+        coEvery { mockLocalRepository.getData(anyString()) } returns searchResultList
+        coEvery { mockRemoteRepository.getData(anyString()) } returns searchResultList
     }
 
     @After
@@ -48,12 +55,6 @@ class MainInteractorTestCoroutines {
     @Test
     fun `get data from local storage`() = testDispatcher.runBlockingTest {
 
-        val interactor: Interactor<DataModel> =
-            MainInteractor(mockRemoteRepository, mockLocalRepository)
-
-        coEvery { mockLocalRepository.getData(anyString()) } returns searchResultList
-        coEvery { mockRemoteRepository.getData(anyString()) } returns searchResultList
-
         interactor.getData(anyString(), local)
 
         coVerify { mockLocalRepository.getData(anyString()) }
@@ -62,12 +63,6 @@ class MainInteractorTestCoroutines {
 
     @Test
     fun `get data from remote storage`() = testDispatcher.runBlockingTest {
-
-        val interactor: Interactor<DataModel> =
-            MainInteractor(mockRemoteRepository, mockLocalRepository)
-
-        coEvery { mockLocalRepository.getData(anyString()) } returns searchResultList
-        coEvery { mockRemoteRepository.getData(anyString()) } returns searchResultList
 
         interactor.getData(anyString(), remote)
 
