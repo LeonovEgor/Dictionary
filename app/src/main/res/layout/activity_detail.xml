@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/detail_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_xx_small"
+        android:background="@color/colorPrimaryDark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Margin">
+
+        <leonov.ru.translator.utils.image.EquilateralImageView
+                android:id="@+id/iv_detail_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/ic_no_photo_vector"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/image_stub"/>
+
+        <TextView
+                android:id="@+id/tv_detail_header"
+                style="@style/HeaderTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_detail_picture"
+                tools:text="Header" />
+
+        <TextView
+                android:id="@+id/tv_detail_transcription"
+                style="@style/BaseTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tv_detail_header"
+                app:layout_constraintBottom_toBottomOf="@id/tv_detail_header"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_header"
+                tools:text="@string/transcription" />
+
+        <TextView
+                android:id="@+id/tv_detail_part_of_speech"
+                style="@style/BaseTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tv_detail_transcription"
+                app:layout_constraintBottom_toBottomOf="@id/tv_detail_transcription"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_transcription"
+                tools:text="@string/part_of_speech" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_detail_sound"
+                style="@style/BaseTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/tv_detail_part_of_speech"
+                app:layout_constraintStart_toEndOf="@id/tv_detail_part_of_speech"
+                app:layout_constraintTop_toTopOf="@id/tv_detail_part_of_speech"
+                app:srcCompat="@drawable/ic_sound_black_24dp" />
+
+        <TextView
+                android:id="@+id/tv_detail_description"
+                style="@style/BaseTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_header"
+                tools:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+        <TextView
+                android:id="@+id/tv_detail_note"
+                style="@style/BaseTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_description"
+                tools:text="Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

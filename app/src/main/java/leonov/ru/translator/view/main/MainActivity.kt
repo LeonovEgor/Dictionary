@@ -13,6 +13,7 @@ import leonov.ru.translator.model.entity.TranslateResult
 import leonov.ru.translator.utils.network.isOnline
 import leonov.ru.translator.utils.sound.SoundHelper
 import leonov.ru.translator.view.base.BaseActivity
+import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,9 +24,9 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: TranslateResult) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
-                if (data.soundUrl.isNotEmpty())
-                    SoundHelper(applicationContext).playUrl(data.soundUrl)
+                startActivity(
+                    DetailActivity.getIntent(this@MainActivity, data)
+                )
             }
         }
 

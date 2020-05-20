@@ -1,10 +1,11 @@
 package leonov.ru.translator.view.main
 
-import leonov.ru.translator.viewmodel.Interactor
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.data.SearchResult
-import leonov.ru.translator.model.repository.Repository
 import leonov.ru.translator.model.entity.TranslateResult
+import leonov.ru.translator.model.repository.Repository
+import leonov.ru.translator.utils.getPartOfSpeech
+import leonov.ru.translator.viewmodel.Interactor
 
 class MainInteractor (
     private val remoteRepository: Repository<List<SearchResult>>,
@@ -26,12 +27,16 @@ class MainInteractor (
     private fun mapToTranslateResult(searchResult: SearchResult, translateResultList: MutableCollection<TranslateResult>) {
         searchResult.meanings?.let { meaningList->
             meaningList.forEach {meaning->
+                val partOfSpeech = meaning.partOfSpeechCode?.getPartOfSpeech() ?: ""
+
                 translateResultList.add(
                     TranslateResult(
                     searchResult.text ?: "",
                     meaning.translation?.text ?: "",
-                        meaning.partOfSpeechCode ?: "",
+                        meaning.translation?.note ?: "",
+                        partOfSpeech,
                         meaning.previewUrl ?: "",
+                        meaning.imageUrl ?: "",
                         meaning.transcription ?: "",
                         meaning.soundUrl ?: ""
                     )
