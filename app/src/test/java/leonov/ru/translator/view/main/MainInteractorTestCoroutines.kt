@@ -12,6 +12,8 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import leonov.ru.translator.model.data.DataModel
 import leonov.ru.translator.model.repository.RepositoryImplementation
+import leonov.ru.translator.model.repository.RepositoryImplementationLocal
+import leonov.ru.translator.view.main.data.historyEntityList
 import leonov.ru.translator.view.main.data.searchResultList
 import leonov.ru.translator.viewmodel.Interactor
 import org.junit.After
@@ -26,7 +28,7 @@ class MainInteractorTestCoroutines {
     private val remote = true
 
     @MockK
-    private lateinit var mockLocalRepository: RepositoryImplementation
+    private lateinit var mockLocalRepository: RepositoryImplementationLocal
 
     @MockK
     private lateinit var mockRemoteRepository: RepositoryImplementation
@@ -42,8 +44,9 @@ class MainInteractorTestCoroutines {
 
         interactor = MainInteractor(mockRemoteRepository, mockLocalRepository)
 
-        coEvery { mockLocalRepository.getData(anyString()) } returns searchResultList
+        coEvery { mockLocalRepository.getData(anyString()) } returns historyEntityList
         coEvery { mockRemoteRepository.getData(anyString()) } returns searchResultList
+        coEvery { mockLocalRepository.saveToDB(any()) } returns Unit
     }
 
     @After

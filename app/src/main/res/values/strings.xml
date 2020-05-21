@@ -19,4 +19,7 @@
     <string name="error_stub">Error</string>
     <string name="part_of_speech">part of speech</string>
 
+    <string name="menu_title_history">History</string>
+    <string name="menu_title_search">Search</string>
+
 </resources>

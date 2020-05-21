@@ -1,7 +1,5 @@
-package leonov.ru.translator.koin
+package leonov.ru.translator.di
 
-import leonov.ru.translator.di.application
-import leonov.ru.translator.di.mainScreen
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.koin.test.KoinTest
@@ -13,6 +11,6 @@ class CheckModulesTest : KoinTest {
 
     @Test
     fun checkAllModules() = checkModules {
-        modules(application, mainScreen)
+        modules(repository, database, mainScreen, historyScreen)
     }
 }

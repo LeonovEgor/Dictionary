@@ -1,25 +1,26 @@
 package leonov.ru.translator.view.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Toast
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import leonov.ru.translator.R
 import leonov.ru.translator.model.data.DataModel
+import leonov.ru.translator.model.data.SearchResult
 import leonov.ru.translator.model.entity.TranslateResult
 import leonov.ru.translator.utils.network.isOnline
-import leonov.ru.translator.utils.sound.SoundHelper
 import leonov.ru.translator.view.base.BaseActivity
 import leonov.ru.translator.view.detail.DetailActivity
+import leonov.ru.translator.view.history.HistoryActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
-    private lateinit var mainViewModel: MainViewModel
+    override lateinit var model: MainViewModel
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
@@ -32,6 +33,9 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
 
     private val adapter: MainAdapter by lazy { MainAdapter(onListItemClickListener) }
+    override fun setDataToAdapter(data: List<TranslateResult>) {
+        adapter.setData(data)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +53,8 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     private fun initModel() {
         val model: MainViewModel by viewModel()
-        mainViewModel = model
-        mainViewModel
+        this.model = model
+        this.model
             .subscribe()
             .observe(this@MainActivity, Observer {
                 renderData(it)
@@ -70,64 +74,44 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
             override fun onClick(searchWord: String) {
                 isNetworkAvailable = isOnline(applicationContext)
                 if (isNetworkAvailable) {
-                    mainViewModel.getData(searchWord, isNetworkAvailable)
+                    model.getData(searchWord, isNetworkAvailable)
                 } else {
                     showNoInternetConnectionDialog()
                 }
             }
         }
 
-    override fun renderData(dataModel: DataModel) {
-        when (dataModel) {
-            is DataModel.Success -> {
-                showSuccessResult(dataModel)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
             }
-            is DataModel.Loading -> {
-                showLoadingProcess(dataModel)
+            R.id.menu_search -> {
+                showSearchHistoryDialog()
+                true
             }
-            is DataModel.Error -> {
-                showErrorResult(dataModel)
-            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun showSuccessResult(dataModel: DataModel.Success) {
-        showViewWorking()
+    private fun showSearchHistoryDialog() {
+        val searchDialogFragment = SearchDialogFragment.newInstance()
+        searchDialogFragment.setOnSearchClickListener(onSearchHistoryClickListener)
+        searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
+    }
 
-        if (dataModel.data.isNullOrEmpty()) {
-            showAlertDialog(
-                getString(R.string.dialog_tittle_sorry),
-                getString(R.string.empty_server_response_on_success)
-            )
-        } else {
-            adapter.setData(dataModel.data)
+    private val onSearchHistoryClickListener: SearchDialogFragment.OnSearchClickListener =
+        object : SearchDialogFragment.OnSearchClickListener {
+            override fun onClick(searchWord: String) {
+                    model.getData(searchWord, false)
+            }
         }
-    }
-
-    private fun showLoadingProcess(dataModel: DataModel.Loading) {
-        showViewLoading()
-        if (dataModel.progress != null) {
-            progress_bar_horizontal.visibility = VISIBLE
-            progress_bar_round.visibility = GONE
-            progress_bar_horizontal.progress = dataModel.progress
-        } else {
-            progress_bar_horizontal.visibility = GONE
-            progress_bar_round.visibility = VISIBLE
-        }
-    }
-
-    private fun showErrorResult(dataModel: DataModel.Error) {
-        showViewWorking()
-        showAlertDialog(getString(R.string.error_stub), dataModel.error.message)
-    }
-
-    private fun showViewWorking() {
-        loading_frame_layout.visibility = GONE
-    }
-
-    private fun showViewLoading() {
-        loading_frame_layout.visibility = VISIBLE
-    }
 
     companion object {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
