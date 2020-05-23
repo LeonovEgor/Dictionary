@@ -9,13 +9,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'koin'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Config.compile_sdk
     defaultConfig {
-        applicationId "leonov.ru.translator"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.application_id
+        minSdkVersion Config.min_sdk
+        targetSdkVersion Config.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,8 +25,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.java_version
+        targetCompatibility Config.java_version
     }
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
@@ -36,57 +36,54 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //AndroidX
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-    //Design
-    implementation 'com.google.android.material:material:1.1.0'
+    // AndroidX
+    implementation Tools.multidex
+    implementation Design.appcompat
+    implementation Design.swiperefreshlayout
+    implementation Design.constraintlayout
+    implementation Design.material
 
     //Kotlin
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71'
+    implementation Kotlin.core
+    implementation Kotlin.stdlib
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    implementation Kotlin.coroutines_core
+    implementation Kotlin.coroutines_android
+    implementation Retrofit.adapter_coroutines
 
     //Retrofit 2
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+    implementation Retrofit.retrofit
+    implementation Retrofit.converter_gson
+    implementation Retrofit.logging_interceptor
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation Glide.glide
+    kapt Glide.glide_compiler
 
     // Koin AndroidX Scope feature
-    implementation "org.koin:koin-androidx-scope:2.1.5"
+    implementation KoinImpl.koin_android
     // Koin AndroidX ViewModel feature
-    implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+    implementation KoinImpl.koin_view_model
 
     //Room
-    implementation "androidx.room:room-runtime:2.2.5"
-    kapt "androidx.room:room-compiler:2.2.5"
-    // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.2.5"
+    implementation Room.room_ktx
+    implementation Room.runtime
+    kapt Room.compiler
 
     //Test
-    testImplementation 'junit:junit:4.13'
-    testImplementation "io.mockk:mockk:1.9.3"
+    testImplementation TestImpl.test_jUnit
+    testImplementation TestImpl.mockk
 
-    testImplementation 'android.arch.core:core-testing:1.1.1'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.6'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6"
+    testImplementation TestImpl.test_core
+    testImplementation TestImpl.kotlinx_coroutines_test
+    testImplementation TestImpl.test_kotlinx_coroutines_core
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation "io.mockk:mockk-android:1.9.3"
+    androidTestImplementation AndroidTestImpl.android_jUnit
+    androidTestImplementation AndroidTestImpl.runner
+    androidTestImplementation AndroidTestImpl.espresso
+    androidTestImplementation AndroidTestImpl.mockk_android
 
     //KoinTest
-    testImplementation "org.koin:koin-test:2.1.5"
+    testImplementation AndroidTestImpl.koin_test
 }

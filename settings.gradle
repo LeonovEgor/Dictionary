@@ -1,1 +1,4 @@
 include ':app'
+include ':core'
+include ':utils'
+include ':model'
