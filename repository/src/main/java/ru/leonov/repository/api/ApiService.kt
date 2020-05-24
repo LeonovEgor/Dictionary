@@ -9,5 +9,5 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("words/search")
-    fun searchAsync(@Query("search") wordToSearch: String): Deferred<List<leonov.ru.model.data.SearchResult>>
+    fun searchAsync(@Query("search") wordToSearch: String): Deferred<List<SearchResult>>
 }

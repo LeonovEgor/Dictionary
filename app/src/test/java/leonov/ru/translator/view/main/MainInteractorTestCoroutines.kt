@@ -33,7 +33,7 @@ class MainInteractorTestCoroutines {
     @MockK
     private lateinit var mockRemoteRepository: RepositoryImplementation
 
-    private lateinit var interactor: Interactor<leonov.ru.model.data.DataModel>
+    private lateinit var interactor: Interactor<DataModel>
 
     private val testDispatcher = TestCoroutineDispatcher()
 

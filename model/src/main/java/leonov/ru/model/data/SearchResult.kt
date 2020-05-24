@@ -4,5 +4,5 @@ import com.google.gson.annotations.Expose
 
 class SearchResult(
     @Expose val text: String?,
-    @Expose val meanings: List<leonov.ru.model.data.Meanings>?
+    @Expose val meanings: List<Meanings>?
 )

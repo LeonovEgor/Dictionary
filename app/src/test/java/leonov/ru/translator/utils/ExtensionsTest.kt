@@ -8,10 +8,10 @@ import org.junit.Before
 
 class ExtensionsTest {
 
-    lateinit var translateResultList: List<TranslateResult>
-    lateinit var trans1: TranslateResult
-    lateinit var trans2: TranslateResult
-    lateinit var trans3: TranslateResult
+    private lateinit var translateResultList: List<TranslateResult>
+    private lateinit var trans1: TranslateResult
+    private lateinit var trans2: TranslateResult
+    private lateinit var trans3: TranslateResult
 
     @Before
     fun before() {
@@ -19,7 +19,7 @@ class ExtensionsTest {
         trans2 = TranslateResult("text2", "текст2", "заметка2", "", "", "", "", "")
         trans3 = TranslateResult("text3", "текст3", "заметка3", "", "", "", "", "")
 
-        translateResultList = listOf<TranslateResult>(trans1, trans2, trans3)
+        translateResultList = listOf(trans1, trans2, trans3)
     }
 
     @Test

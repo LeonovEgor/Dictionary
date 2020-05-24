@@ -1,13 +1,13 @@
-package leonov.ru.translator.view.main.data//package leonov.ru.translator.view.main
+package leonov.ru.translator.view.main.data
 
 import leonov.ru.model.data.Meanings
 import leonov.ru.model.data.SearchResult
 import leonov.ru.model.data.Translation
 import ru.leonov.repository.room.HistoryEntity
 
-val translation = leonov.ru.model.data.Translation("trans1", "note1")
+val translation = Translation("trans1", "note1")
 val meanings = listOf(
-    leonov.ru.model.data.Meanings(
+    Meanings(
         translation,
         "",
         "",
@@ -17,21 +17,22 @@ val meanings = listOf(
     )
 )
 
-val searchResult = leonov.ru.model.data.SearchResult("word1", meanings)
+val searchResult1 = SearchResult("word1", meanings)
+val searchResult2 = SearchResult("word1", meanings)
 
 val searchResultList = listOf(
-    leonov.ru.model.data.SearchResult("word1", meanings),
-    leonov.ru.model.data.SearchResult("word2", meanings)
+    searchResult1,
+    searchResult2
 )
 
-val historyEntity1 = ru.leonov.repository.room.HistoryEntity(
+val historyEntity1 = HistoryEntity(
     "word1",
     "translation1",
     "transcription1"
 )
-val historyEntity2 = ru.leonov.repository.room.HistoryEntity(
+val historyEntity2 = HistoryEntity(
     "word2",
     "translation2",
     "transcription2"
 )
-val historyEntityList = listOf<ru.leonov.repository.room.HistoryEntity>(historyEntity1, historyEntity2)
+val historyEntityList = listOf(historyEntity1, historyEntity2)

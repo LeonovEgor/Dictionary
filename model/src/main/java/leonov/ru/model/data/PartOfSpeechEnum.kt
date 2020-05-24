@@ -1,7 +1,5 @@
 package leonov.ru.model.data
 
-import java.lang.Exception
-
 enum class PartOfSpeechEnum(val value: String) {
     n("noun"),
     v("verb"),

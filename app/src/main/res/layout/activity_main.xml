@@ -7,7 +7,6 @@
         android:background="@color/colorBackground">
 
     <FrameLayout
-            android:id="@+id/success_frame_layout"
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="match_parent">
