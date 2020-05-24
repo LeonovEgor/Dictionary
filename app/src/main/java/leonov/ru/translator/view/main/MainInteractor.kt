@@ -6,9 +6,10 @@ import leonov.ru.model.entity.TranslateResult
 import ru.leonov.repository.repository.Repository
 import ru.leonov.repository.repository.RepositoryLocal
 import ru.leonov.repository.room.HistoryEntity
-import leonov.ru.translator.utils.convertTranslationToCommaString
-import leonov.ru.translator.utils.getPartOfSpeech
 import leonov.ru.core.viewmodel.Interactor
+import leonov.ru.translator.utils.mapHistoryEntityToTranslateResult
+import leonov.ru.translator.utils.mapSearchResultToTranslateResult
+import leonov.ru.translator.utils.mapTranslateResultListToHistoryEntity
 
 class MainInteractor(
     private val remoteRepository: Repository<List<SearchResult>>,
@@ -21,7 +22,7 @@ class MainInteractor(
             remoteRepository
                 .getData(word)
                 .map { mapSearchResultToTranslateResult(it, translateResultList) }
-            localRepository.saveToDB(mapToHistoryEntity(word, translateResultList))
+            localRepository.saveToDB(mapTranslateResultListToHistoryEntity(word, translateResultList))
 
         } else {
             localRepository
@@ -33,57 +34,4 @@ class MainInteractor(
         return DataModel.Success(translateResultList)
     }
 
-    private fun mapHistoryEntityToTranslateResult(
-        historyEntity: HistoryEntity,
-        translateResultList: ArrayList<TranslateResult>
-    ) {
-        translateResultList.add(
-            TranslateResult(
-                historyEntity.word,
-                historyEntity.translation,
-                "",
-                "",
-                "",
-                "",
-                historyEntity.transcription,
-                ""
-            )
-        )
-    }
-
-    private fun mapToHistoryEntity(
-        word: String,
-        translateResultList: ArrayList<TranslateResult>
-    ): HistoryEntity {
-        return HistoryEntity(
-            word,
-            translateResultList.convertTranslationToCommaString(),
-            ""
-        )
-    }
-
-
-    private fun mapSearchResultToTranslateResult(
-        searchResult: SearchResult,
-        translateResultList: MutableCollection<TranslateResult>
-    ) {
-        searchResult.meanings?.let { meaningList ->
-            meaningList.forEach { meaning ->
-                val partOfSpeech = meaning.partOfSpeechCode?.getPartOfSpeech() ?: ""
-
-                translateResultList.add(
-                    TranslateResult(
-                        searchResult.text ?: "",
-                        meaning.translation?.text ?: "",
-                        meaning.translation?.note ?: "",
-                        partOfSpeech,
-                        meaning.previewUrl ?: "",
-                        meaning.imageUrl ?: "",
-                        meaning.transcription ?: "",
-                        meaning.soundUrl ?: ""
-                    )
-                )
-            }
-        }
-    }
 }

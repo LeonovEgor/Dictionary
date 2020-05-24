@@ -27,20 +27,6 @@ import leonov.ru.utils.ui.AlertDialogFragment
 
 class DetailActivity: AppCompatActivity() {
 
-    companion object {
-
-        private const val DIALOG_FRAGMENT_TAG = "8c7dff51-9769-4f6d-bbee-a3896085e76e"
-
-        private const val TRANSLATE_RESULT = "Translate_Result"
-
-        fun getIntent(
-            context: Context,
-            translateResult: TranslateResult
-        ): Intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(TRANSLATE_RESULT, translateResult)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -135,6 +121,20 @@ class DetailActivity: AppCompatActivity() {
                     .centerCrop()
             )
             .into(imageView)
+    }
+
+    companion object {
+
+        private const val DIALOG_FRAGMENT_TAG = "8c7dff51-9769-4f6d-bbee-a3896085e76e"
+
+        private const val TRANSLATE_RESULT = "Translate_Result"
+
+        fun getIntent(
+            context: Context,
+            translateResult: TranslateResult
+        ): Intent = Intent(context, DetailActivity::class.java).apply {
+            putExtra(TRANSLATE_RESULT, translateResult)
+        }
     }
 
 }
