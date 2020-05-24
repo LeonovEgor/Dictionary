@@ -18,12 +18,12 @@ import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_detail.*
 
 import leonov.ru.translator.R
-import leonov.ru.translator.model.entity.TranslateResult
-import leonov.ru.translator.utils.addHttpsPrefix
-import leonov.ru.translator.utils.network.isOnline
-import leonov.ru.translator.utils.sound.SoundHelper
-import leonov.ru.translator.utils.surroundBrackets
-import leonov.ru.translator.utils.ui.AlertDialogFragment
+import leonov.ru.model.entity.TranslateResult
+import leonov.ru.utils.addHttpsPrefix
+import leonov.ru.utils.network.isOnline
+import leonov.ru.utils.sound.SoundHelper
+import leonov.ru.utils.surroundBrackets
+import leonov.ru.utils.ui.AlertDialogFragment
 
 class DetailActivity: AppCompatActivity() {
 

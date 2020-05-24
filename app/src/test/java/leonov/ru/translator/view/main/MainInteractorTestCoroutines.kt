@@ -10,12 +10,12 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import leonov.ru.translator.model.data.DataModel
-import leonov.ru.translator.model.repository.RepositoryImplementation
-import leonov.ru.translator.model.repository.RepositoryImplementationLocal
+import leonov.ru.model.data.DataModel
+import ru.leonov.repository.repository.RepositoryImplementation
+import ru.leonov.repository.repository.RepositoryImplementationLocal
 import leonov.ru.translator.view.main.data.historyEntityList
 import leonov.ru.translator.view.main.data.searchResultList
-import leonov.ru.translator.viewmodel.Interactor
+import leonov.ru.core.viewmodel.Interactor
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -33,7 +33,7 @@ class MainInteractorTestCoroutines {
     @MockK
     private lateinit var mockRemoteRepository: RepositoryImplementation
 
-    private lateinit var interactor: Interactor<DataModel>
+    private lateinit var interactor: Interactor<leonov.ru.model.data.DataModel>
 
     private val testDispatcher = TestCoroutineDispatcher()
 

@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import leonov.ru.translator.R
-import leonov.ru.translator.model.entity.TranslateResult
-import leonov.ru.translator.utils.addHttpsPrefix
-import leonov.ru.translator.utils.image.loadByUrl
-import leonov.ru.translator.utils.surroundBrackets
+import leonov.ru.model.entity.TranslateResult
+import leonov.ru.utils.addHttpsPrefix
+import leonov.ru.utils.image.loadByUrl
+import leonov.ru.utils.surroundBrackets
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {

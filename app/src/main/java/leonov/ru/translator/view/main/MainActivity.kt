@@ -8,14 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import leonov.ru.translator.R
-import leonov.ru.translator.model.data.DataModel
-import leonov.ru.translator.model.data.SearchResult
-import leonov.ru.translator.model.entity.TranslateResult
-import leonov.ru.translator.utils.network.isOnline
-import leonov.ru.translator.view.base.BaseActivity
+import leonov.ru.model.data.DataModel
+import leonov.ru.model.entity.TranslateResult
+import leonov.ru.utils.network.isOnline
+import leonov.ru.core.base.BaseActivity
 import leonov.ru.translator.view.detail.DetailActivity
-import leonov.ru.translator.view.history.HistoryActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
+import ru.leonov.history.view.HistoryActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {

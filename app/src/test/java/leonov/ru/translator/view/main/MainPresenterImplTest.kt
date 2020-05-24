@@ -4,8 +4,8 @@ package leonov.ru.translator.view.main
 //import io.mockk.mockk
 //import io.reactivex.rxjava3.core.Observable
 //import io.reactivex.rxjava3.disposables.CompositeDisposable
-//import leonov.ru.translator.model.data.DataModel
-//import leonov.ru.translator.view.base.View
+//import leonov.ru.model.data.DataModel
+//import leonov.ru.core.base.View
 //import org.junit.After
 //import org.junit.Before
 //import org.junit.Rule

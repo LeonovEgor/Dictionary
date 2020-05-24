@@ -1,14 +1,14 @@
 package leonov.ru.translator.view.main
 
-import leonov.ru.translator.model.data.DataModel
-import leonov.ru.translator.model.data.SearchResult
-import leonov.ru.translator.model.entity.TranslateResult
-import leonov.ru.translator.model.repository.Repository
-import leonov.ru.translator.model.repository.RepositoryLocal
-import leonov.ru.translator.room.HistoryEntity
+import leonov.ru.model.data.DataModel
+import leonov.ru.model.data.SearchResult
+import leonov.ru.model.entity.TranslateResult
+import ru.leonov.repository.repository.Repository
+import ru.leonov.repository.repository.RepositoryLocal
+import ru.leonov.repository.room.HistoryEntity
 import leonov.ru.translator.utils.convertTranslationToCommaString
 import leonov.ru.translator.utils.getPartOfSpeech
-import leonov.ru.translator.viewmodel.Interactor
+import leonov.ru.core.viewmodel.Interactor
 
 class MainInteractor(
     private val remoteRepository: Repository<List<SearchResult>>,
@@ -55,7 +55,11 @@ class MainInteractor(
         word: String,
         translateResultList: ArrayList<TranslateResult>
     ): HistoryEntity {
-        return HistoryEntity(word, translateResultList.convertTranslationToCommaString(), "")
+        return HistoryEntity(
+            word,
+            translateResultList.convertTranslationToCommaString(),
+            ""
+        )
     }
 
 

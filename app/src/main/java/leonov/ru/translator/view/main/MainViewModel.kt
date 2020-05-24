@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import leonov.ru.translator.model.data.DataModel
-import leonov.ru.translator.viewmodel.BaseViewModel
+import leonov.ru.model.data.DataModel
+import leonov.ru.core.viewmodel.BaseViewModel
 
 class MainViewModel (private val interactor: MainInteractor) :
     BaseViewModel<DataModel>() {

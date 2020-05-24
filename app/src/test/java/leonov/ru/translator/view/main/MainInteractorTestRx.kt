@@ -1,9 +1,9 @@
 package leonov.ru.translator.view.main
 
-//import leonov.ru.translator.viewmodel.Interactor
+//import leonov.ru.core.viewmodel.Interactor
 //import io.reactivex.rxjava3.core.Observable
-//import leonov.ru.translator.model.data.DataModel
-//import leonov.ru.translator.model.repository.RepositoryImplementation
+//import leonov.ru.model.data.DataModel
+//import ru.leonov.repository.repository.RepositoryImplementation
 //import leonov.ru.translator.view.main.data.searchResultList
 //import org.junit.After
 //import org.junit.Before

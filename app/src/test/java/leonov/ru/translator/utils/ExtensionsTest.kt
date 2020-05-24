@@ -1,8 +1,6 @@
 package leonov.ru.translator.utils
 
-import leonov.ru.translator.model.data.Meanings
-import leonov.ru.translator.model.data.Translation
-import leonov.ru.translator.model.entity.TranslateResult
+import leonov.ru.model.entity.TranslateResult
 import org.junit.Test
 
 import org.junit.Assert.*
