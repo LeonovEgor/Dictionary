@@ -12,9 +12,16 @@ import ru.leonov.repository.room.HistoryDataBase
 import ru.leonov.repository.room.HistoryEntity
 import leonov.ru.translator.view.main.MainInteractor
 import leonov.ru.translator.view.main.MainViewModel
+import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
-import ru.leonov.history.view.HistoryInteractor
-import ru.leonov.history.view.HistoryViewModel
+
+
+fun injectDependencies() = loadModules
+
+private val loadModules by lazy {
+    loadKoinModules(listOf(repository, database, mainScreen))
+}
+
 
 val repository = module {
 
@@ -40,9 +47,4 @@ val database = module {
 val mainScreen = module {
     factory { MainInteractor(get(), get()) }
     factory { MainViewModel(get()) }
-}
-
-val historyScreen = module {
-    factory { HistoryInteractor(get(), get()) }
-    factory { HistoryViewModel(get()) }
 }

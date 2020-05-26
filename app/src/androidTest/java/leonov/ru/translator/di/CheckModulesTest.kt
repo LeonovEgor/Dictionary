@@ -11,6 +11,6 @@ class CheckModulesTest : KoinTest {
 
     @Test
     fun checkAllModules() = checkModules {
-        modules(repository, database, mainScreen, historyScreen)
+        modules(repository, database, mainScreen)
     }
 }

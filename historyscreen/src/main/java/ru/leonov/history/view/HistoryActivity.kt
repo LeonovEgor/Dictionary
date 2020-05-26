@@ -9,6 +9,7 @@ import leonov.ru.model.entity.TranslateResult
 import leonov.ru.core.base.BaseActivity
 import ru.leonov.history.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.leonov.history.di.injectDependencies
 
 class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
 
@@ -19,6 +20,7 @@ class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
+        injectDependencies()
         setActionbarHomeButtonAsUp()
         iniViewModel()
         initViews()

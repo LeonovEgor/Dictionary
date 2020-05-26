@@ -4,22 +4,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.play.core.splitinstall.SplitInstallManager
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 import kotlinx.android.synthetic.main.activity_main.*
 import leonov.ru.translator.R
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.network.isOnline
 import leonov.ru.core.base.BaseActivity
+import leonov.ru.translator.di.injectDependencies
 import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
-import ru.leonov.history.view.HistoryActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val HISTORY_ACTIVITY_PATH = "ru.leonov.history.view.HistoryActivity"
+private const val HISTORY_ACTIVITY_FEATURE_NAME = "historyscreen"
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     override lateinit var model: MainViewModel
+    private lateinit var splitInstallManager: SplitInstallManager
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
@@ -40,6 +48,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        injectDependencies()
         initModel()
         initRecyclerView()
         initFab()
@@ -88,7 +97,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                startActivity(Intent(this, HistoryActivity::class.java))
+                loadHistoryModule()
                 true
             }
             R.id.menu_search -> {
@@ -97,6 +106,29 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun loadHistoryModule() {
+        splitInstallManager = SplitInstallManagerFactory.create(applicationContext)
+        val request = SplitInstallRequest
+            .newBuilder()
+            .addModule(HISTORY_ACTIVITY_FEATURE_NAME)
+            .build()
+
+        splitInstallManager
+            .startInstall(request)
+            .addOnSuccessListener {
+                val intent = Intent().setClassName(packageName, HISTORY_ACTIVITY_PATH)
+                startActivity(intent)
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    applicationContext,
+                    "Couldn't download feature: " + it.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
     }
 
     private fun showSearchHistoryDialog() {
@@ -108,7 +140,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     private val onSearchHistoryClickListener: SearchDialogFragment.OnSearchClickListener =
         object : SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                    model.getData(searchWord, false)
+                model.getData(searchWord, false)
             }
         }
 

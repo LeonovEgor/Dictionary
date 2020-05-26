@@ -63,6 +63,9 @@ object Versions {
     const val runtime = "2.2.5"
     const val roomCompiler = "2.2.5"
 
+    //Google Play
+    const val googlePlayCore = "1.7.3"
+
     // Test
     const val jUnit = "4.13"
     const val mockk = "1.9.3"
@@ -118,6 +121,10 @@ object Room {
     const val runtime = "androidx.room:room-runtime:${Versions.runtime}"
     const val compiler = "androidx.room:room-compiler:${Versions.roomCompiler}"
     const val room_ktx = "androidx.room:room-ktx:${Versions.roomKtx}"
+}
+
+object GooglePlay {
+    const val googlePlayCore = "com.google.android.play:core:${Versions.googlePlayCore}"
 }
 
 object TestImpl {

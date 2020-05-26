@@ -25,7 +25,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.detail.DetailActivity" />
-        <activity android:name="ru.leonov.history.view.HistoryActivity" />
     </application>
 
 </manifest>

@@ -31,6 +31,8 @@ android {
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
+
+    dynamicFeatures = [Modules.historyscreen]
 }
 
 dependencies {
@@ -40,7 +42,6 @@ dependencies {
     implementation project(Modules.model)
     implementation project(Modules.repository)
     implementation project(Modules.utils)
-    implementation project(Modules.historyscreen)
 
     // AndroidX
     implementation Tools.multidex
@@ -71,6 +72,9 @@ dependencies {
     implementation Room.room_ktx
     implementation Room.runtime
     kapt Room.compiler
+
+    //Google Play libraries
+    implementation GooglePlay.googlePlayCore
 
     //Test
     testImplementation TestImpl.test_jUnit
