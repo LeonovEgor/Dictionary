@@ -7,6 +7,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallState
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
@@ -23,11 +32,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val HISTORY_ACTIVITY_PATH = "ru.leonov.history.view.HistoryActivity"
 private const val HISTORY_ACTIVITY_FEATURE_NAME = "historyscreen"
+private const val REQUEST_CODE = 42
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     override lateinit var model: MainViewModel
     private lateinit var splitInstallManager: SplitInstallManager
+    private lateinit var appUpdateManager: AppUpdateManager
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
@@ -52,6 +63,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
         initModel()
         initRecyclerView()
         initFab()
+        checkForUpdates()
     }
 
     private fun initRecyclerView() {
@@ -143,6 +155,83 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
                 model.getData(searchWord, false)
             }
         }
+
+    private fun checkForUpdates() {
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateIntent ->
+                if (appUpdateIntent.updateAvailability() ==
+                    UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateIntent.isUpdateTypeAllowed(IMMEDIATE)
+                ) {
+                    appUpdateManager.registerListener(stateUpdatedListener)
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateIntent,
+                        IMMEDIATE,
+                        this,
+                        REQUEST_CODE
+                    )
+                }
+            }
+    }
+
+    private val stateUpdatedListener = InstallStateUpdatedListener { state ->
+        state?.let {
+            if (it.installStatus() == InstallStatus.DOWNLOADED) {
+                popupSnackbarForCompleteUpdate()
+            }
+        }
+    }
+
+    private fun popupSnackbarForCompleteUpdate() {
+        Snackbar.make(
+            findViewById(R.id.main_container),
+            "An update has just been downloaded.",
+            Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            setAction("RESTART") { appUpdateManager.completeUpdate() }
+            show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                appUpdateManager.unregisterListener(stateUpdatedListener)
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "Update flow failed! Result code: $resultCode",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                    popupSnackbarForCompleteUpdate()
+                }
+                if (appUpdateInfo.updateAvailability()
+                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                ) {
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        AppUpdateType.IMMEDIATE,
+                        this,
+                        REQUEST_CODE
+                    )
+                }
+            }
+    }
+
 
     companion object {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
