@@ -3,13 +3,16 @@ package leonov.ru.core.base
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.loading_layout.*
 import leonov.ru.core.R
 import leonov.ru.core.viewmodel.BaseViewModel
 import leonov.ru.core.viewmodel.Interactor
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
+import leonov.ru.utils.network.OnlineLiveData
 import leonov.ru.utils.network.isOnline
 import leonov.ru.utils.ui.AlertDialogFragment
 
@@ -19,20 +22,28 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
         private const val DIALOG_FRAGMENT_TAG = "74a54328-5d62-46bf-ab6b-cbf5d8c79522"
     }
 
+    protected abstract val layoutRes: Int
     abstract val model: BaseViewModel<T>
-    protected var isNetworkAvailable: Boolean = false
+    protected var isNetworkAvailable: Boolean = true
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        isNetworkAvailable = isOnline(applicationContext)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(layoutRes)
+
+        subscribeToNetworkChange()
     }
 
-    override fun onResume() {
-        super.onResume()
-        isNetworkAvailable = isOnline(applicationContext)
-        if (!isNetworkAvailable && isDialogNull()) {
-            showNoInternetConnectionDialog()
-        }
+    private fun subscribeToNetworkChange() {
+        OnlineLiveData(this).observe(this@BaseActivity, Observer<Boolean> {
+            isNetworkAvailable = it
+            if (!isNetworkAvailable) {
+                Toast.makeText(
+                    this@BaseActivity,
+                    R.string.dialog_message_device_is_offline,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
     }
 
     protected fun showNoInternetConnectionDialog() {
@@ -43,7 +54,8 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
     }
 
     private fun showAlertDialog(title: String?, message: String?) {
-        AlertDialogFragment.newInstance(title, message).show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
+        AlertDialogFragment.newInstance(title, message)
+            .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
     }
 
     private fun isDialogNull(): Boolean {

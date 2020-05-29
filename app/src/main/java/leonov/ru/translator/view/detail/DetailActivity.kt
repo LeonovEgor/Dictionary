@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.addHttpsPrefix
+import leonov.ru.utils.network.OnlineLiveData
 import leonov.ru.utils.network.isOnline
 import leonov.ru.utils.sound.SoundHelper
 import leonov.ru.utils.surroundBrackets
@@ -52,16 +54,22 @@ class DetailActivity: AppCompatActivity() {
     }
 
     private fun startLoadingOrShowError() {
-        if (isOnline(applicationContext)) {
-            setData()
-        } else {
-            AlertDialogFragment.newInstance(
-                getString(R.string.dialog_title_device_is_offline),
-                getString(R.string.dialog_message_device_is_offline)
-            ).show( supportFragmentManager, DIALOG_FRAGMENT_TAG )
-
-            stopRefreshAnimationIfNeeded()
-        }
+        OnlineLiveData(this).observe(
+            this@DetailActivity,
+            Observer<Boolean> {
+                if (it) {
+                    setData()
+                } else {
+                    AlertDialogFragment.newInstance(
+                        getString(R.string.dialog_title_device_is_offline),
+                        getString(R.string.dialog_message_device_is_offline)
+                    ).show(
+                        supportFragmentManager,
+                        DIALOG_FRAGMENT_TAG
+                    )
+                    stopRefreshAnimationIfNeeded()
+                }
+            })
     }
 
     private fun setData() {

@@ -14,12 +14,12 @@ import ru.leonov.history.di.injectDependencies
 
 class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
 
+    override val layoutRes = R.layout.activity_history
     override lateinit var model: HistoryViewModel
     private val adapter: HistoryAdapter by lazy { HistoryAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_history)
 
         injectDependencies()
         setActionbarHomeButtonAsUp()
