@@ -2,6 +2,7 @@ package leonov.ru.translator.di
 
 import androidx.room.Room
 import leonov.ru.model.data.SearchResult
+import leonov.ru.translator.view.main.MainActivity
 import ru.leonov.repository.datasource.RetrofitImplementation
 import ru.leonov.repository.datasource.RoomDataBaseImplementation
 import ru.leonov.repository.repository.Repository
@@ -12,7 +13,9 @@ import ru.leonov.repository.room.HistoryDataBase
 import ru.leonov.repository.room.HistoryEntity
 import leonov.ru.translator.view.main.MainInteractor
 import leonov.ru.translator.view.main.MainViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
@@ -44,7 +47,10 @@ val database = module {
     single { get<HistoryDataBase>().historyDao() }
 }
 
+
 val mainScreen = module {
-    factory { MainInteractor(get(), get()) }
-    factory { MainViewModel(get()) }
+    scope(named<MainActivity>()) {
+        scoped { MainInteractor(get(), get()) }
+        viewModel { MainViewModel(get()) }
+    }
 }

@@ -7,13 +7,14 @@ import kotlinx.android.synthetic.main.activity_history.*
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.core.base.BaseActivity
+import org.koin.androidx.scope.lifecycleScope
 import ru.leonov.history.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.leonov.history.di.injectDependencies
 
 class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
 
-    override val model: HistoryViewModel by viewModel()
+    override lateinit var model: HistoryViewModel
     private val adapter: HistoryAdapter by lazy { HistoryAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,8 @@ class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
         if (rv_history.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
+        val historyModel: HistoryViewModel by lifecycleScope.inject()
+        model = historyModel
         model.subscribe().observe(this@HistoryActivity, Observer { renderData(it) })
     }
 

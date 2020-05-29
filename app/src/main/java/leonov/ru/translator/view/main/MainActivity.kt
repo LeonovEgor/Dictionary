@@ -28,6 +28,8 @@ import leonov.ru.core.base.BaseActivity
 import leonov.ru.translator.di.injectDependencies
 import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val HISTORY_ACTIVITY_PATH = "ru.leonov.history.view.HistoryActivity"
@@ -72,7 +74,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private fun initModel() {
-        val model: MainViewModel by viewModel()
+        val model: MainViewModel by lifecycleScope.inject()
         this.model = model
         this.model
             .subscribe()
