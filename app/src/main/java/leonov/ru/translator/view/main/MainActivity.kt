@@ -7,10 +7,11 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
@@ -19,18 +20,16 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
-import kotlinx.android.synthetic.main.activity_main.*
-import leonov.ru.translator.R
+import leonov.ru.core.base.BaseActivity
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
-import leonov.ru.utils.network.isOnline
-import leonov.ru.core.base.BaseActivity
+import leonov.ru.translator.R
 import leonov.ru.translator.di.injectDependencies
 import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
-import org.koin.androidx.scope.currentScope
+import leonov.ru.utils.network.isOnline
+import leonov.ru.utils.ui.viewById
 import org.koin.androidx.scope.lifecycleScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val HISTORY_ACTIVITY_PATH = "ru.leonov.history.view.HistoryActivity"
 private const val HISTORY_ACTIVITY_FEATURE_NAME = "historyscreen"
@@ -39,6 +38,8 @@ private const val REQUEST_CODE = 42
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     override lateinit var model: MainViewModel
+    private val rvSearchResult by viewById<RecyclerView>(R.id.rv_search_result)
+
     private lateinit var splitInstallManager: SplitInstallManager
     private lateinit var appUpdateManager: AppUpdateManager
 
@@ -69,8 +70,8 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private fun initRecyclerView() {
-        rv_search_result.layoutManager = LinearLayoutManager(applicationContext)
-        rv_search_result.adapter = adapter
+        rvSearchResult.layoutManager = LinearLayoutManager(applicationContext)
+        rvSearchResult.adapter = adapter
     }
 
     private fun initModel() {
@@ -84,7 +85,8 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private fun initFab() {
-        search_fab.setOnClickListener {
+        val searchFab by viewById<FloatingActionButton>(R.id.search_fab)
+        searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
             searchDialogFragment.setOnSearchClickListener(onSearchClickListener)
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
