@@ -22,7 +22,6 @@ import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.addHttpsPrefix
 import leonov.ru.utils.network.OnlineLiveData
-import leonov.ru.utils.network.isOnline
 import leonov.ru.utils.sound.SoundHelper
 import leonov.ru.utils.surroundBrackets
 import leonov.ru.utils.ui.AlertDialogFragment

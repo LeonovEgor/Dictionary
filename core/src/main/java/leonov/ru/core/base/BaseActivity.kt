@@ -1,11 +1,10 @@
 package leonov.ru.core.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.loading_layout.*
 import leonov.ru.core.R
 import leonov.ru.core.viewmodel.BaseViewModel
@@ -13,18 +12,22 @@ import leonov.ru.core.viewmodel.Interactor
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.network.OnlineLiveData
-import leonov.ru.utils.network.isOnline
-import leonov.ru.utils.ui.AlertDialogFragment
+import leonov.ru.utils.ui.showAlertDialog
 
 abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivity() {
-
-    companion object {
-        private const val DIALOG_FRAGMENT_TAG = "74a54328-5d62-46bf-ab6b-cbf5d8c79522"
-    }
 
     protected abstract val layoutRes: Int
     abstract val model: BaseViewModel<T>
     protected var isNetworkAvailable: Boolean = true
+
+    private val snackBar: Snackbar by lazy {
+        val root = window.decorView.findViewById<View>(android.R.id.content)
+        Snackbar.make(
+            root,
+            R.string.dialog_message_device_is_offline,
+            Snackbar.LENGTH_INDEFINITE
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,30 +39,20 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
     private fun subscribeToNetworkChange() {
         OnlineLiveData(this).observe(this@BaseActivity, Observer<Boolean> {
             isNetworkAvailable = it
-            if (!isNetworkAvailable) {
-                Toast.makeText(
-                    this@BaseActivity,
-                    R.string.dialog_message_device_is_offline,
-                    Toast.LENGTH_LONG
-                ).show()
+            if (!it) {
+                snackBar.show()
+            } else {
+                snackBar.dismiss()
             }
         })
     }
 
     protected fun showNoInternetConnectionDialog() {
         showAlertDialog(
+            supportFragmentManager,
             getString(R.string.dialog_title_device_is_offline),
             getString(R.string.dialog_message_device_is_offline)
         )
-    }
-
-    private fun showAlertDialog(title: String?, message: String?) {
-        AlertDialogFragment.newInstance(title, message)
-            .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
-    }
-
-    private fun isDialogNull(): Boolean {
-        return supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
     }
 
     protected fun renderData(dataModel: DataModel) {
@@ -81,6 +74,7 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
 
         if (dataModel.data.isNullOrEmpty()) {
             showAlertDialog(
+                supportFragmentManager,
                 getString(R.string.dialog_tittle_sorry),
                 getString(R.string.empty_server_response_on_success)
             )
@@ -105,7 +99,11 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
 
     private fun showErrorResult(dataModel: DataModel.Error) {
         showViewWorking()
-        showAlertDialog(getString(R.string.error_stub), dataModel.error.message)
+        showAlertDialog(
+            supportFragmentManager,
+            getString(R.string.error_stub),
+            dataModel.error.message
+        )
     }
 
     private fun showViewWorking() {

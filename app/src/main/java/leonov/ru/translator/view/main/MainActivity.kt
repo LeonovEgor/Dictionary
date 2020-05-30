@@ -27,7 +27,6 @@ import leonov.ru.translator.R
 import leonov.ru.translator.di.injectDependencies
 import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
-import leonov.ru.utils.network.isOnline
 import leonov.ru.utils.ui.viewById
 import org.koin.androidx.scope.lifecycleScope
 

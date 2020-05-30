@@ -22,5 +22,6 @@ dependencies {
 
     androidTestImplementation AndroidTestImpl.runner
     androidTestImplementation AndroidTestImpl.espresso
+    implementation 'com.google.android.material:material:1.1.0'
 
 }
