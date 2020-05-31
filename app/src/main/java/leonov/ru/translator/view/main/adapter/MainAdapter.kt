@@ -3,13 +3,17 @@ package leonov.ru.translator.view.main.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
+//import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.addHttpsPrefix
 import leonov.ru.utils.image.loadByUrl
 import leonov.ru.utils.surroundBrackets
+import leonov.ru.utils.ui.viewById
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
@@ -38,14 +42,17 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        private val itemHeader by viewById<TextView>(R.id.tv_item_header)
+        private val itemTranscription by viewById<TextView>(R.id.tv_item_transcription)
+        private val itemDescription by viewById<TextView>(R.id.tv_item_description)
+        private val itemPicture by viewById<ImageView>(R.id.iv_picture)
 
         fun bind(data: TranslateResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemView.tv_item_header.text = data.text
-
-                itemView.tv_item_transcription.text = data.transcription.surroundBrackets()
-                itemView.tv_item_description.text = data.translation
-                itemView.iv_picture.loadByUrl(data.previewUrl.addHttpsPrefix())
+                itemHeader.text = data.text
+                itemTranscription.text = data.transcription.surroundBrackets()
+                itemDescription.text = data.translation
+                itemPicture.loadByUrl(data.previewUrl.addHttpsPrefix())
 
                 itemView.setOnClickListener { openInNewWindow(data) }
             }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 
@@ -38,4 +39,12 @@ fun <T : View> Activity.viewById(@IdRes viewId: Int): ViewByIdDelegate<T> {
 
 fun <T : View> Fragment.viewById(@IdRes viewId: Int): ViewByIdDelegate<T> {
     return ViewByIdDelegate({ view }, viewId)
+}
+
+fun <T: View> RecyclerView.ViewHolder.viewById(@IdRes viewId: Int): ViewByIdDelegate<T> {
+    return ViewByIdDelegate({ this.itemView }, viewId)
+}
+
+fun <T: View> View.viewById(@IdRes viewId: Int): ViewByIdDelegate<T> {
+    return ViewByIdDelegate({ this }, viewId)
 }
