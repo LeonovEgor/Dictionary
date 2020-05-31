@@ -6,10 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.recyclerview_item.view.*
-//import kotlinx.android.synthetic.main.recyclerview_item.view.*
-import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
+import leonov.ru.translator.R
 import leonov.ru.utils.addHttpsPrefix
 import leonov.ru.utils.image.loadByUrl
 import leonov.ru.utils.surroundBrackets

@@ -24,6 +24,7 @@ object Modules {
 }
 
 object Versions {
+
     // Tools
     const val multidex = "1.0.3"
 
@@ -32,6 +33,7 @@ object Versions {
     const val material = "1.1.0"
     const val swiperefreshlayout = "1.0.0"
     const val constraintlayout = "1.1.3"
+    const val recyclerView = "1.1.0"
 
     // Kotlin
     const val core = "1.2.0"
@@ -90,6 +92,7 @@ object Design {
     const val material = "com.google.android.material:material:${Versions.material}"
     const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
     const val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintlayout}"
+    const val recycler_view = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
 }
 
 object Kotlin {

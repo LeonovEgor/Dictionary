@@ -9,6 +9,7 @@ dependencies {
 
     // AndroidX
     implementation Design.appcompat
+    implementation Design.recycler_view
 
     //Kotlin
     implementation Kotlin.core
@@ -29,6 +30,5 @@ dependencies {
     androidTestImplementation AndroidTestImpl.android_jUnit
     androidTestImplementation AndroidTestImpl.runner
     androidTestImplementation AndroidTestImpl.espresso
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 }
