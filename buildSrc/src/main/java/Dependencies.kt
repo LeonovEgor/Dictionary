@@ -39,7 +39,7 @@ object Versions {
 
     // Coroutines
     const val coroutinesCore = "1.3.6"
-    const val coroutinesAndroid = "1.3.0"
+    const val coroutinesAndroid = "1.3.6"
 
     // Retrofit
     const val retrofit = "2.8.1"

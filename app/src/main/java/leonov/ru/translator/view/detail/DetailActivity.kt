@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.addHttpsPrefix
-import leonov.ru.utils.network.OnlineLiveData
+import leonov.ru.utils.network.NetworkStatus
 import leonov.ru.utils.sound.SoundHelper
 import leonov.ru.utils.surroundBrackets
 import leonov.ru.utils.ui.AlertDialogFragment
@@ -53,7 +53,7 @@ class DetailActivity: AppCompatActivity() {
     }
 
     private fun startLoadingOrShowError() {
-        OnlineLiveData(this).observe(
+        NetworkStatus(this).isOnline().observe(
             this@DetailActivity,
             Observer<Boolean> {
                 if (it) {

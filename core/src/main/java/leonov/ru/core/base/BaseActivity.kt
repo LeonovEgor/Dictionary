@@ -11,7 +11,7 @@ import leonov.ru.core.viewmodel.BaseViewModel
 import leonov.ru.core.viewmodel.Interactor
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
-import leonov.ru.utils.network.OnlineLiveData
+import leonov.ru.utils.network.NetworkStatus
 import leonov.ru.utils.ui.showAlertDialog
 
 abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivity() {
@@ -37,7 +37,7 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
     }
 
     private fun subscribeToNetworkChange() {
-        OnlineLiveData(this).observe(this@BaseActivity, Observer<Boolean> {
+        NetworkStatus(this).isOnline().observe(this@BaseActivity, Observer {
             isNetworkAvailable = it
             if (!it) {
                 snackBar.show()
