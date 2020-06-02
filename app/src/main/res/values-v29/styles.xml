@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
     </style>
 
     <style name="Margin" parent="AppTheme">
@@ -11,6 +12,7 @@
     </style>
 
     <style name="BaseTextStyle" parent="TextAppearance.MaterialComponents.Body1">
+<!--        <item name="android:textColor">@color/color_text_main</item>-->
         <item name="android:textSize">@dimen/text_size_standard</item>
         <item name="android:textStyle">normal</item>
         <item name="android:layout_margin">@dimen/margin</item>
@@ -22,7 +24,7 @@
     </style>
 
     <style name="TextViewButtonStyle" parent="BaseTextStyle">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/color_primary</item>
     </style>
 
     <style name="BaseEditTextStyle">

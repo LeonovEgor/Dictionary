@@ -7,8 +7,7 @@
         android:id="@+id/detail_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/margin_xx_small"
-        android:background="@color/colorPrimaryDark">
+        android:padding="@dimen/margin_xx_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,44 +27,42 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/image_stub"/>
 
-        <TextView
-                android:id="@+id/tv_detail_header"
-                style="@style/HeaderTextStyle"
-                android:layout_width="wrap_content"
+        <TableRow
+                android:id="@+id/ll_header"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_detail_picture"
-                tools:text="Header" />
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/iv_detail_picture">
 
-        <TextView
-                android:id="@+id/tv_detail_transcription"
-                style="@style/BaseTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/tv_detail_header"
-                app:layout_constraintBottom_toBottomOf="@id/tv_detail_header"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_header"
-                tools:text="@string/transcription" />
+            <TextView
+                    android:id="@+id/tv_detail_header"
+                    style="@style/HeaderTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Header" />
 
-        <TextView
-                android:id="@+id/tv_detail_part_of_speech"
-                style="@style/BaseTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/tv_detail_transcription"
-                app:layout_constraintBottom_toBottomOf="@id/tv_detail_transcription"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_transcription"
-                tools:text="@string/part_of_speech" />
+            <TextView
+                    android:id="@+id/tv_detail_transcription"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/transcription" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_detail_sound"
-                style="@style/BaseTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/tv_detail_part_of_speech"
-                app:layout_constraintStart_toEndOf="@id/tv_detail_part_of_speech"
-                app:layout_constraintTop_toTopOf="@id/tv_detail_part_of_speech"
-                app:srcCompat="@drawable/ic_sound_black_24dp" />
+            <TextView
+                    android:id="@+id/tv_detail_part_of_speech"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/part_of_speech" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_detail_sound"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_sound_black_24dp" />
+
+        </TableRow>
 
         <TextView
                 android:id="@+id/tv_detail_description"
@@ -74,7 +71,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_header"
+                app:layout_constraintTop_toBottomOf="@id/ll_header"
                 tools:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 
         <TextView

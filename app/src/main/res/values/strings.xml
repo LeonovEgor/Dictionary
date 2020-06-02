@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">A3_Dictionary</string>
     <string name="empty_server_response_on_success">Response from server is empty</string>
-    <string name="button_search">Search</string>
+    <string name="button_search">SEARCH</string>
     <string name="search_hint">New word</string>
     <string name="delete_description">X</string>
     <string name="image_stub">image</string>

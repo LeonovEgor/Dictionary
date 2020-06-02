@@ -3,7 +3,7 @@ import org.gradle.api.JavaVersion
 object Config {
     const val application_id = "leonov.ru.translator"
     const val compile_sdk = 29
-    const val min_sdk = 21
+    const val min_sdk = 24
     const val target_sdk = 29
     val java_version = JavaVersion.VERSION_1_8
 }
