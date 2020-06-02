@@ -1,6 +1,9 @@
 package leonov.ru.core.base
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -39,12 +42,28 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
     private fun subscribeToNetworkChange() {
         NetworkStatus(this).isOnline().observe(this@BaseActivity, Observer {
             isNetworkAvailable = it
-            if (!it) {
-                snackBar.show()
+            if (!isNetworkAvailable) {
+                noNetworkReaction()
             } else {
-                snackBar.dismiss()
+                onlineReaction()
+
             }
         })
+    }
+
+    private fun noNetworkReaction() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val panelIntent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
+            startActivityForResult(panelIntent, 42)
+        } else {
+            snackBar.show()
+        }
+    }
+
+    private fun onlineReaction() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            snackBar.dismiss()
+        }
     }
 
     protected fun showNoInternetConnectionDialog() {
