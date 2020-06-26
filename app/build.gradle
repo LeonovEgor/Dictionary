@@ -6,14 +6,16 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'koin'
+
 android {
-    compileSdkVersion 29
+    compileSdkVersion Config.compile_sdk
     defaultConfig {
-        applicationId "leonov.ru.translator"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.application_id
+        minSdkVersion Config.min_sdk
+        targetSdkVersion Config.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,37 +25,70 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.java_version
+        targetCompatibility Config.java_version
     }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+
+    dynamicFeatures = [Modules.historyscreen]
 }
 
 dependencies {
-    //AndroidX
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //Design
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation project(Modules.core)
+    implementation project(Modules.model)
+    implementation project(Modules.repository)
+    implementation project(Modules.utils)
+
+    // AndroidX
+    implementation Tools.multidex
+    implementation Design.appcompat
+    implementation Design.swiperefreshlayout
+    implementation Design.constraintlayout
+    implementation Design.material
 
     //Kotlin
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71'
+    implementation Kotlin.core
+    implementation Kotlin.stdlib
 
-    //Rx-Java
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.1'
+    // Coroutines
+    implementation Kotlin.coroutines_core
+    implementation Kotlin.coroutines_android
+    implementation Retrofit.adapter_coroutines
 
-    //Retrofit 2
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
-    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
+    //Glide
+    implementation Glide.glide
+    kapt Glide.glide_compiler
+
+    // Koin AndroidX Scope feature
+    implementation KoinImpl.koin_android
+    // Koin AndroidX ViewModel feature
+    implementation KoinImpl.koin_view_model
+
+    //Room
+    implementation Room.room_ktx
+    implementation Room.runtime
+    kapt Room.compiler
+
+    //Google Play libraries
+    implementation GooglePlay.googlePlayCore
 
     //Test
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation "io.mockk:mockk-android:1.9.3"
+    testImplementation TestImpl.test_jUnit
+    testImplementation TestImpl.mockk
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation TestImpl.test_core
+    testImplementation TestImpl.kotlinx_coroutines_test
+    testImplementation TestImpl.test_kotlinx_coroutines_core
+
+    androidTestImplementation AndroidTestImpl.android_jUnit
+    androidTestImplementation AndroidTestImpl.runner
+    androidTestImplementation AndroidTestImpl.espresso
+    androidTestImplementation AndroidTestImpl.mockk_android
+
+    //KoinTest
+    testImplementation AndroidTestImpl.koin_test
 }

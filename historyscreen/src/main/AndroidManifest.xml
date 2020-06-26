@@ -1,0 +1,21 @@
+<manifest
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:dist="http://schemas.android.com/apk/distribution"
+        package="ru.leonov.history">
+
+    <dist:module
+            dist:instant="false"
+            dist:title="@string/title_history_screen_feature">
+        <dist:delivery>
+            <dist:on-demand />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application>
+        <activity
+                android:name=".view.HistoryActivity"
+                android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

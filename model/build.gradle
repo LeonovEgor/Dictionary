@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Design.appcompat
+
+    //Kotlin
+    implementation Kotlin.core
+    implementation Kotlin.stdlib
+
+    //Retrofit 2
+    implementation Retrofit.converter_gson
+
+    //Test
+    testImplementation TestImpl.test_jUnit
+
+    androidTestImplementation AndroidTestImpl.runner
+    androidTestImplementation AndroidTestImpl.espresso
+
+}

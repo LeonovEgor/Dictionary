@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#CDDC39</color>
+    <color name="color_primary_variant">#AFB42B</color>
+    <color name="color_secondary">#8BC34A</color>
+    <color name="color_secondary_variant">#689F38</color>
+
+    <color name="color_delete_text_icon">#80FFFFFF</color>
+    <color name="color_toolbar_icon">@color/color_primary</color>
+    <color name="color_load_error_icon">@color/color_secondary</color>
+    <color name="color_sound_icon">@color/color_primary_variant</color>
+</resources>

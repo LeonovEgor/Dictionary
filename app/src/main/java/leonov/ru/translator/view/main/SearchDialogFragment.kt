@@ -24,7 +24,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
     private val textWatcher = object : TextWatcher {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (searchEditText.text != null && !searchEditText.text.toString().isEmpty()) {
+            if (searchEditText.text != null && searchEditText.text.toString().isNotEmpty()) {
                 searchButton.isEnabled = true
                 clearTextImageView.visibility = View.VISIBLE
             } else {
@@ -54,9 +54,9 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchEditText = search_edit_text
-        clearTextImageView = clear_text_imageview
-        searchButton = search_button_textview
+        searchEditText = et_search
+        clearTextImageView = iv_clear_text
+        searchButton = tv_search_button
 
         searchButton.setOnClickListener(onSearchButtonClickListener)
         searchEditText.addTextChangedListener(textWatcher)

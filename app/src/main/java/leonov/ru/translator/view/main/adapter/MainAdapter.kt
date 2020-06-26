@@ -3,15 +3,22 @@ package leonov.ru.translator.view.main.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import leonov.ru.model.entity.TranslateResult
 import leonov.ru.translator.R
-import leonov.ru.translator.model.data.SearchResult
-import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
+import leonov.ru.utils.addHttpsPrefix
+import leonov.ru.utils.image.loadByUrl
+import leonov.ru.utils.surroundBrackets
+import leonov.ru.utils.ui.viewById
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<SearchResult>) :
+class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    fun setData(data: List<SearchResult>) {
+    private var data: List<TranslateResult> = arrayListOf()
+
+    fun setData(data: List<TranslateResult>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -19,12 +26,12 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
         return RecyclerItemViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.activity_main_recyclerview_item, parent, false) as View
+                .inflate(R.layout.recyclerview_item, parent, false) as View
         )
     }
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
@@ -33,21 +40,28 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: SearchResult) {
+        private val itemHeader by viewById<TextView>(R.id.tv_item_header)
+        private val itemTranscription by viewById<TextView>(R.id.tv_item_transcription)
+        private val itemDescription by viewById<TextView>(R.id.tv_item_description)
+        private val itemPicture by viewById<ImageView>(R.id.iv_picture)
+
+        fun bind(data: TranslateResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemView.header_textview_recycler_item.text = data.text
-                itemView.description_textview_recycler_item.text = data.meanings?.get(0)?.translation?.translation
+                itemHeader.text = data.text
+                itemTranscription.text = data.transcription.surroundBrackets()
+                itemDescription.text = data.translation
+                itemPicture.loadByUrl(data.previewUrl.addHttpsPrefix())
 
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
     }
 
-    private fun openInNewWindow(listItemData: SearchResult) {
+    private fun openInNewWindow(listItemData: TranslateResult) {
         onListItemClickListener.onItemClick(listItemData)
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(data: SearchResult)
+        fun onItemClick(data: TranslateResult)
     }
 }

@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // AndroidX
+    implementation Design.appcompat
+    implementation Design.recycler_view
+
+    //Kotlin
+    implementation Kotlin.core
+    implementation Kotlin.stdlib
+
+    // Koin AndroidX ViewModel feature
+    implementation KoinImpl.koin_view_model
+
+    //Glide
+    implementation Glide.glide
+    kapt Glide.glide_compiler
+
+    //Test
+    testImplementation TestImpl.test_jUnit
+
+    testImplementation TestImpl.test_core
+
+    androidTestImplementation AndroidTestImpl.android_jUnit
+    androidTestImplementation AndroidTestImpl.runner
+    androidTestImplementation AndroidTestImpl.espresso
+
+}
