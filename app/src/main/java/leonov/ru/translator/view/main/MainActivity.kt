@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,16 +27,15 @@ import leonov.ru.translator.di.injectDependencies
 import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
 import leonov.ru.utils.ui.viewById
-import org.koin.androidx.scope.lifecycleScope
+
+private const val REQUEST_CODE = 42
 
 private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG = "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
 private const val HISTORY_ACTIVITY_PATH = "ru.leonov.history.view.HistoryActivity"
 private const val HISTORY_ACTIVITY_FEATURE_NAME = "historyscreen"
-private const val REQUEST_CODE = 42
 
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
-    override val layoutRes = R.layout.activity_main
     override lateinit var model: MainViewModel
     private val rvSearchResult by viewById<RecyclerView>(R.id.rv_search_result)
 
@@ -58,9 +56,11 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        injectDependencies()
         super.onCreate(savedInstanceState)
 
-        injectDependencies()
+        setContentView(R.layout.activity_main)
+
         initModel()
         initRecyclerView()
         initFab()
@@ -68,11 +68,11 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private fun initModel() {
-        val model: MainViewModel by lifecycleScope.inject()
+        val model: MainViewModel by inject()
         this.model = model
         this.model
             .subscribe()
-            .observe(this@MainActivity, Observer {
+            .observe(this@MainActivity, {
                 renderData(it)
             })
     }
@@ -156,6 +156,21 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
             }
         }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                appUpdateManager.unregisterListener(stateUpdatedListener)
+            } else {
+                Toast.makeText(
+                        applicationContext,
+                        "Update flow failed! Result code: $resultCode",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
     private fun checkForUpdates() {
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         appUpdateManager
@@ -177,7 +192,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private val stateUpdatedListener = InstallStateUpdatedListener { state ->
-        state?.let {
+        state.let {
             if (it.installStatus() == InstallStatus.DOWNLOADED) {
                 popupSnackbarForCompleteUpdate()
             }
@@ -194,22 +209,6 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
             show()
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                appUpdateManager.unregisterListener(stateUpdatedListener)
-            } else {
-                Toast.makeText(
-                    applicationContext,
-                    "Update flow failed! Result code: $resultCode",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
 
     override fun onResume() {
         super.onResume()

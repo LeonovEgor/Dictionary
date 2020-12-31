@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'koin'
@@ -28,6 +26,13 @@ android {
         sourceCompatibility Config.java_version
         targetCompatibility Config.java_version
     }
+    kotlinOptions {
+        jvmTarget = Config.jvmTarget
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }

@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_history_recyclerview_item.view.*
 import leonov.ru.model.entity.TranslateResult
 import ru.leonov.history.R
+import ru.leonov.history.databinding.ActivityHistoryRecyclerviewItemBinding
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {
 
@@ -34,10 +34,11 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolde
     }
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = ActivityHistoryRecyclerviewItemBinding.bind(itemView)
 
         fun bind(data: TranslateResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemView.tv_history_header_item.text = data.text
+                binding.tvHistoryHeaderItem.text = data.text
                 itemView.setOnClickListener {
                     Toast.makeText(itemView.context, "on click: ${data.text}", Toast.LENGTH_SHORT).show()
                 }

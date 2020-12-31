@@ -6,6 +6,7 @@ object Config {
     const val min_sdk = 24
     const val target_sdk = 29
     val java_version = JavaVersion.VERSION_1_8
+    val jvmTarget = "1.8"
 }
 
 object Releases {
@@ -26,32 +27,32 @@ object Modules {
 object Versions {
 
     // Tools
-    const val multidex = "1.0.3"
+    const val multidex = "2.0.1"
 
     // Design
-    const val appcompat = "1.1.0"
-    const val material = "1.1.0"
-    const val swiperefreshlayout = "1.0.0"
-    const val constraintlayout = "1.1.3"
+    const val appcompat = "1.2.0"
+    const val material = "1.2.1"
+    const val swiperefreshlayout = "1.1.0"
+    const val constraintlayout = "2.0.4"
     const val recyclerView = "1.1.0"
 
     // Kotlin
-    const val core = "1.2.0"
-    const val stdlib = "1.3.71"
+    const val core = "1.3.2"
+    const val stdlib = "1.4.21"
 
     // Coroutines
-    const val coroutinesCore = "1.3.6"
-    const val coroutinesAndroid = "1.3.6"
+    const val coroutinesCore = "1.4.2"
+    const val coroutinesAndroid = "1.4.2"
 
     // Retrofit
-    const val retrofit = "2.8.1"
-    const val converterGson = "2.7.1"
-    const val interceptor = "4.4.0"
+    const val retrofit = "2.9.0"
+    const val converterGson = "2.9.0"
+    const val interceptor = "4.9.0"
     const val adapterCoroutines = "0.9.2"
 
     // Koin
-    const val koinAndroid = "2.1.5"
-    const val koinViewModel = "2.1.5"
+    const val koinAndroid = "2.2.1"
+    const val koinViewModel = "2.2.1"
 
     // Glide
     const val glide = "4.11.0"
@@ -61,12 +62,12 @@ object Versions {
     const val picasso = "2.5.2"
 
     // Room
-    const val roomKtx = "2.2.5"
-    const val runtime = "2.2.5"
-    const val roomCompiler = "2.2.5"
+    const val roomKtx = "2.2.6"
+    const val runtime = "2.2.6"
+    const val roomCompiler = "2.2.6"
 
     //Google Play
-    const val googlePlayCore = "1.7.3"
+    const val googlePlayCore = "1.9.0"
 
     // Test
     const val jUnit = "4.13"

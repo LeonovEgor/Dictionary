@@ -5,21 +5,21 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.loading_layout.*
 import leonov.ru.core.R
+import leonov.ru.core.databinding.LoadingLayoutBinding
 import leonov.ru.core.viewmodel.BaseViewModel
 import leonov.ru.core.viewmodel.Interactor
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.utils.network.NetworkStatus
 import leonov.ru.utils.ui.showAlertDialog
+import org.koin.androidx.scope.ScopeActivity
 
-abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivity() {
+abstract class BaseActivity<T : DataModel, I : Interactor<T>> : ScopeActivity() {
 
-    protected abstract val layoutRes: Int
     abstract val model: BaseViewModel<T>
     protected var isNetworkAvailable: Boolean = true
 
@@ -32,21 +32,23 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
         )
     }
 
+    private lateinit var binding: LoadingLayoutBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutRes)
+        binding = LoadingLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         subscribeToNetworkChange()
     }
 
     private fun subscribeToNetworkChange() {
-        NetworkStatus(this).isOnline().observe(this@BaseActivity, Observer {
+        NetworkStatus(this).isOnline().observe(this@BaseActivity, {
             isNetworkAvailable = it
             if (!isNetworkAvailable) {
                 noNetworkReaction()
             } else {
                 onlineReaction()
-
             }
         })
     }
@@ -107,12 +109,12 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
     private fun showLoadingProcess(dataModel: DataModel.Loading) {
         showViewLoading()
         if (dataModel.progress != null) {
-            progress_bar_horizontal.visibility = View.VISIBLE
-            progress_bar_round.visibility = View.GONE
-            progress_bar_horizontal.progress = dataModel.progress!!
+            binding.progressBarHorizontal.visibility = View.VISIBLE
+            binding.progressBarRound.visibility = View.GONE
+            binding.progressBarHorizontal.progress = dataModel.progress!!
         } else {
-            progress_bar_horizontal.visibility = View.GONE
-            progress_bar_round.visibility = View.VISIBLE
+            binding.progressBarHorizontal.visibility = View.GONE
+            binding.progressBarRound.visibility = View.VISIBLE
         }
     }
 
@@ -126,11 +128,11 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : AppCompatActivit
     }
 
     private fun showViewWorking() {
-        loading_frame_layout.visibility = View.GONE
+        binding.loadingFrameLayout.visibility = View.GONE
     }
 
     private fun showViewLoading() {
-        loading_frame_layout.visibility = View.VISIBLE
+        binding.loadingFrameLayout.visibility = View.VISIBLE
     }
 
 }

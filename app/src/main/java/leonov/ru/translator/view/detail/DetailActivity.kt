@@ -16,10 +16,9 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 
-import kotlinx.android.synthetic.main.activity_detail.*
-
 import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
+import leonov.ru.translator.databinding.ActivityDetailBinding
 import leonov.ru.utils.addHttpsPrefix
 import leonov.ru.utils.network.NetworkStatus
 import leonov.ru.utils.sound.SoundHelper
@@ -28,12 +27,16 @@ import leonov.ru.utils.ui.AlertDialogFragment
 
 class DetailActivity: AppCompatActivity() {
 
+    private lateinit var binding: ActivityDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setActionbarHomeButtonAsUp()
-        detail_swipe_refresh_layout.setOnRefreshListener{ startLoadingOrShowError() }
+        binding.detailSwipeRefreshLayout.setOnRefreshListener{ startLoadingOrShowError() }
         setData()
     }
 
@@ -75,15 +78,15 @@ class DetailActivity: AppCompatActivity() {
 
         val translateResult = intent.extras?.getParcelable<TranslateResult>(TRANSLATE_RESULT)
         translateResult?.let {transResult ->
-            tv_detail_header.text = transResult.text
-            tv_detail_transcription.text = transResult.transcription.surroundBrackets()
-            tv_detail_part_of_speech.text = transResult.partOfSpeech
-            tv_detail_description.text = transResult.translation
-            tv_detail_note.text = transResult.note
+            binding.tvDetailHeader.text = transResult.text
+            binding.tvDetailTranscription.text = transResult.transcription.surroundBrackets()
+            binding.tvDetailPartOfSpeech.text = transResult.partOfSpeech
+            binding.tvDetailDescription.text = transResult.translation
+            binding.tvDetailNote.text = transResult.note
 
-            useGlideToLoadPhoto(iv_detail_picture, transResult.imageUrl)
+            useGlideToLoadPhoto(binding.ivDetailPicture, transResult.imageUrl)
 
-            iv_detail_sound.setOnClickListener {
+            binding.ivDetailSound.setOnClickListener {
                 if (transResult.soundUrl.isNotEmpty())
                     SoundHelper(applicationContext).playUrl(transResult.soundUrl.addHttpsPrefix())
             }
@@ -91,8 +94,8 @@ class DetailActivity: AppCompatActivity() {
     }
 
     private fun stopRefreshAnimationIfNeeded() {
-        if (detail_swipe_refresh_layout.isRefreshing) {
-            detail_swipe_refresh_layout.isRefreshing = false
+        if (binding.detailSwipeRefreshLayout.isRefreshing) {
+            binding.detailSwipeRefreshLayout.isRefreshing = false
         }
     }
 

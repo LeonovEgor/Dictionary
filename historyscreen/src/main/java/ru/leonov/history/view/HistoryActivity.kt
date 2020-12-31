@@ -2,26 +2,27 @@ package ru.leonov.history.view
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.activity_history.*
+import leonov.ru.core.base.BaseActivity
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
-import leonov.ru.core.base.BaseActivity
-import org.koin.androidx.scope.lifecycleScope
 import ru.leonov.history.R
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.leonov.history.databinding.ActivityHistoryBinding
 import ru.leonov.history.di.injectDependencies
 
 class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
 
-    override val layoutRes = R.layout.activity_history
     override lateinit var model: HistoryViewModel
     private val adapter: HistoryAdapter by lazy { HistoryAdapter() }
 
+    private lateinit var binding: ActivityHistoryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        injectDependencies()
         super.onCreate(savedInstanceState)
 
-        injectDependencies()
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setActionbarHomeButtonAsUp()
         iniViewModel()
         initViews()
@@ -43,16 +44,16 @@ class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
     }
 
     private fun iniViewModel() {
-        if (rv_history.adapter != null) {
+        if (binding.rvHistory.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
-        val historyModel: HistoryViewModel by lifecycleScope.inject()
+        val historyModel: HistoryViewModel by inject()
         model = historyModel
-        model.subscribe().observe(this@HistoryActivity, Observer { renderData(it) })
+        model.subscribe().observe(this@HistoryActivity, { renderData(it) })
     }
 
     private fun initViews() {
-        rv_history.adapter = adapter
+        binding.rvHistory.adapter = adapter
     }
 
     override fun onResume() {
@@ -63,4 +64,5 @@ class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
     override fun setDataToAdapter(data: List<TranslateResult>) {
         adapter.setData(data)
     }
+
 }

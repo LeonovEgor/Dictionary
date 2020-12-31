@@ -48,9 +48,15 @@ val database = module {
 }
 
 
+//val mainScreen = module {
+//    scope(named<MainActivity>()) {
+//        scoped { MainInteractor(get(), get()) }
+//        viewModel { MainViewModel(get()) }
+//    }
 val mainScreen = module {
-    scope(named<MainActivity>()) {
+    scope<MainActivity> {
         scoped { MainInteractor(get(), get()) }
         viewModel { MainViewModel(get()) }
     }
+
 }

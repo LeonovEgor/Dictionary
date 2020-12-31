@@ -1,7 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
+android {
+    buildFeatures {
+        viewBinding true
+    }
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -10,6 +14,7 @@ dependencies {
     implementation project(Modules.utils)
 
     implementation Design.appcompat
+    implementation Design.material
 
     //Kotlin
     implementation Kotlin.core
@@ -17,11 +22,14 @@ dependencies {
     implementation Kotlin.coroutines_core
     implementation Kotlin.coroutines_android
 
+    //Koin for Android
+    implementation KoinImpl.koin_android
+    implementation KoinImpl.koin_view_model
+
     //Test
     testImplementation TestImpl.test_jUnit
 
     androidTestImplementation AndroidTestImpl.runner
     androidTestImplementation AndroidTestImpl.espresso
-    implementation 'com.google.android.material:material:1.1.0'
 
 }

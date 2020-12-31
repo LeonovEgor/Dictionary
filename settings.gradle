@@ -1,6 +1,7 @@
-include Modules.app
-include Modules.historyscreen
-include Modules.core
-include Modules.model
-include Modules.repository
-include Modules.utils
+rootProject.name='Dictionary'
+include ":app"
+include ":historyscreen"
+include ":core"
+include ":model"
+include ":repository"
+include ":utils"
