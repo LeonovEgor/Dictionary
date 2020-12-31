@@ -3,18 +3,20 @@
 Язык: Kotlin
 
 Позволяет:  
-- запрашивать погоду с сайта https://openweathermap.org/
-- составлять список городов.
-- получать показания со встроенных датчиков телефона: давления, влажность и температура
+- запрашивать перевод слова с сайта https://dictionary.skyeng.ru
+- Отображать список возможных переводов
+- отображать сопоставленные им изображения
+- прослушивать произношение слова
 
 ## Стек технологий:  
-- Sqlite;
-- Custom View;
+- Деление проекта на модули
+- Динамическая загрузка модуля (historyscreen)
+- Sqlite, Room;
 - Matherial Design;
 - Запрос данных из сети retrofit, JSON;
-- Отображение картинок Picasso;
+- Отображение картинок Glide;
 
 ## Скриншоты приложения
-![screenshots](./Weather1.png?raw=true)  
-![screenshots](./Weather2.png?raw=true)  
-![screenshots](./Weather3.png?raw=true)  
+![screenshots](./Dictionary1.png?raw=true)  
+![screenshots](./Dictionary2.png?raw=true)  
+![screenshots](./Dictionary3.png?raw=true)  
