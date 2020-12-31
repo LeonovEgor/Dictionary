@@ -58,7 +58,7 @@ class DetailActivity: AppCompatActivity() {
     private fun startLoadingOrShowError() {
         NetworkStatus(this).isOnline().observe(
             this@DetailActivity,
-            Observer<Boolean> {
+            {
                 if (it) {
                     setData()
                 } else {

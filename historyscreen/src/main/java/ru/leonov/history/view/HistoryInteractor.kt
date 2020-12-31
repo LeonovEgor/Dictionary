@@ -16,7 +16,7 @@ class HistoryInteractor(
     override suspend fun getData(word: String, fromRemoteSource: Boolean): DataModel {
         return DataModel.Success(
             if (fromRemoteSource) {
-                // Пока непонятно, какой тут будет функционал.
+                // Тут может быть какая-то удаленная загрузка. (Не реализовано)
                 listOf()
             } else {
                 repositoryLocal.getData(word).map { it.mapToTranslateResult() }

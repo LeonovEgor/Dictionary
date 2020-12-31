@@ -5,7 +5,6 @@ import android.view.MenuItem
 import leonov.ru.core.base.BaseActivity
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
-import ru.leonov.history.R
 import ru.leonov.history.databinding.ActivityHistoryBinding
 import ru.leonov.history.di.injectDependencies
 

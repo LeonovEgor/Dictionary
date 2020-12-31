@@ -6,7 +6,7 @@ object Config {
     const val min_sdk = 24
     const val target_sdk = 29
     val java_version = JavaVersion.VERSION_1_8
-    val jvmTarget = "1.8"
+    const val jvmTarget = "1.8"
 }
 
 object Releases {
@@ -81,7 +81,7 @@ object Versions {
     const val runner = "1.2.0"
     const val espressoCore = "3.2.0"
     const val mockkAndroid = "1.9.3"
-    const val koinTest = "2.1.5"
+    const val koinTest = "2.2.1"
 }
 
 object Tools {

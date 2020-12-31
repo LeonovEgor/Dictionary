@@ -5,8 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import leonov.ru.core.R
 import leonov.ru.core.databinding.LoadingLayoutBinding

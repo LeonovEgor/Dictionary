@@ -1,3 +1,5 @@
+@file:Suppress("EnumEntryName")
+
 package leonov.ru.model.data
 
 enum class PartOfSpeechEnum(val value: String) {
