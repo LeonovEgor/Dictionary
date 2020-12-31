@@ -7,17 +7,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-
-import leonov.ru.translator.R
 import leonov.ru.model.entity.TranslateResult
+import leonov.ru.translator.R
 import leonov.ru.translator.databinding.ActivityDetailBinding
 import leonov.ru.utils.addHttpsPrefix
 import leonov.ru.utils.network.NetworkStatus

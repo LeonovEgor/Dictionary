@@ -1,9 +1,6 @@
 package leonov.ru.core.base
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import leonov.ru.core.R
