@@ -11,6 +11,8 @@
 ## Стек технологий:  
 - Деление проекта на модули
 - Динамическая загрузка модуля (historyscreen)
+- DI - Koin
+- Coroutines
 - Sqlite, Room;
 - Matherial Design;
 - Запрос данных из сети retrofit, JSON;
