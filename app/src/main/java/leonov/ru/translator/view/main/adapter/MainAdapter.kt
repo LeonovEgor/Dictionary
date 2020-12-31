@@ -3,15 +3,13 @@ package leonov.ru.translator.view.main.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.translator.R
+import leonov.ru.translator.databinding.RecyclerviewItemBinding
 import leonov.ru.utils.addHttpsPrefix
 import leonov.ru.utils.image.loadByUrl
 import leonov.ru.utils.surroundBrackets
-import leonov.ru.utils.ui.viewById
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
@@ -39,19 +37,16 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
     }
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        private val itemHeader by viewById<TextView>(R.id.tv_item_header)
-        private val itemTranscription by viewById<TextView>(R.id.tv_item_transcription)
-        private val itemDescription by viewById<TextView>(R.id.tv_item_description)
-        private val itemPicture by viewById<ImageView>(R.id.iv_picture)
+        private val binding = RecyclerviewItemBinding.bind(itemView)
 
         fun bind(data: TranslateResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemHeader.text = data.text
-                itemTranscription.text = data.transcription.surroundBrackets()
-                itemDescription.text = data.translation
-                itemPicture.loadByUrl(data.previewUrl.addHttpsPrefix())
-
+                with(binding) {
+                    tvItemHeader.text = data.text
+                    tvItemTranscription.text = data.transcription.surroundBrackets()
+                    tvItemDescription.text = data.translation
+                    ivPicture.loadByUrl(data.previewUrl.addHttpsPrefix())
+                }
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
@@ -64,4 +59,5 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
     interface OnListItemClickListener {
         fun onItemClick(data: TranslateResult)
     }
+
 }

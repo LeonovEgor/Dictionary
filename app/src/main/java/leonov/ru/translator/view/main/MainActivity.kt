@@ -6,8 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
@@ -15,10 +13,11 @@ import leonov.ru.core.base.BaseActivity
 import leonov.ru.model.data.DataModel
 import leonov.ru.model.entity.TranslateResult
 import leonov.ru.translator.R
+import leonov.ru.translator.databinding.ActivityMainBinding
 import leonov.ru.translator.di.injectDependencies
 import leonov.ru.translator.view.detail.DetailActivity
 import leonov.ru.translator.view.main.adapter.MainAdapter
-import leonov.ru.utils.ui.viewById
+
 
 private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG = "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
 private const val HISTORY_ACTIVITY_PATH = "ru.leonov.history.view.HistoryActivity"
@@ -27,7 +26,7 @@ private const val HISTORY_ACTIVITY_FEATURE_NAME = "historyscreen"
 class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     override lateinit var model: MainViewModel
-    private val rvSearchResult by viewById<RecyclerView>(R.id.rv_search_result)
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var splitInstallManager: SplitInstallManager
 
@@ -48,7 +47,8 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
         injectDependencies()
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initModel()
         initRecyclerView()
@@ -66,13 +66,14 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
     }
 
     private fun initRecyclerView() {
-        rvSearchResult.layoutManager = LinearLayoutManager(applicationContext)
-        rvSearchResult.adapter = adapter
+        with(binding) {
+            rvSearchResult.layoutManager = LinearLayoutManager(applicationContext)
+            rvSearchResult.adapter = adapter
+        }
     }
 
     private fun initFab() {
-        val searchFab by viewById<FloatingActionButton>(R.id.search_fab)
-        searchFab.setOnClickListener {
+        binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
             searchDialogFragment.setOnSearchClickListener(onSearchClickListener)
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)

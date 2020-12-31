@@ -52,18 +52,11 @@ abstract class BaseActivity<T : DataModel, I : Interactor<T>> : ScopeActivity() 
     }
 
     private fun noNetworkReaction() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val panelIntent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
-            startActivityForResult(panelIntent, 42)
-        } else {
             snackBar.show()
-        }
     }
 
     private fun onlineReaction() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             snackBar.dismiss()
-        }
     }
 
     protected fun showNoInternetConnectionDialog() {

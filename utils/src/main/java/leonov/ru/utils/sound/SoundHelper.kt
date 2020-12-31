@@ -16,7 +16,7 @@ class SoundHelper(private val context: Context) {
             mp.prepare()
             mp.start()
         } catch (e: IOException) {
-            Log.e("SOUND", "prepare() failed")
+            Log.e("SOUND", "play sound failed")
         }
     }
 }
