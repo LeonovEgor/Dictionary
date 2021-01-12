@@ -14,7 +14,7 @@
 - DI - Koin
 - Coroutines
 - Sqlite, Room;
-- Matherial Design;
+- Material Design;
 - Запрос данных из сети retrofit, JSON;
 - Отображение картинок Glide;
 
