@@ -1,5 +1,5 @@
 # Dictionary
-Курсовой проект на курсе Geekbrains Android Proffessional.   
+Курсовой проект на курсе Geekbrains Android Professional.   
 Язык: Kotlin
 
 Позволяет:  
